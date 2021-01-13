@@ -9,7 +9,7 @@ public class Todo {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
     private String activityName;
     private String color;
     private String category;
@@ -23,7 +23,7 @@ public class Todo {
     protected Todo(){
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -37,5 +37,15 @@ public class Todo {
 
     public String getCategory() {
         return category;
+    }
+
+    @Override
+    public String toString() {
+        return "Todo{" +
+                "id=" + id +
+                ", activityName='" + activityName + '\'' +
+                ", color='" + color + '\'' +
+                ", category='" + category + '\'' +
+                '}';
     }
 }

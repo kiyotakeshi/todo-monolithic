@@ -16,11 +16,7 @@ class TodoApplicationTests {
 
 	@Test
 	void todo() {
-		// for check DML
-		// var todo1 = new Todo(1,"buy milk", "white", "housework");
-		// em.persistAndFlush(todo1);
-
-		var todo1 = em.find(Todo.class, 1);
+		var todo1 = this.em.find(Todo.class, 1000);
 		assertThat(todo1.getActivityName()).isEqualTo("go to supermarket");
 	}
 }

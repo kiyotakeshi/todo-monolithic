@@ -2,6 +2,8 @@
 
 service running at http://localhost:8081:
 
+== Single Todo
+
 .curl
 include::{snippets}/todo/curl-request.adoc[]
 
@@ -13,3 +15,17 @@ include::{snippets}/todo/http-response.adoc[]
 
 .response-fields
 include::{snippets}/todo/response-fields.adoc[]
+
+== Todo List
+
+.curl
+include::{snippets}/todoList/curl-request.adoc[]
+
+.request
+include::{snippets}/todoList/http-request.adoc[]
+
+.response
+include::{snippets}/todoList/http-response.adoc[]
+
+.response-fields
+include::{snippets}/todoList/response-fields.adoc[]

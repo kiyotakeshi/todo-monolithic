@@ -49,15 +49,26 @@ class TodoControllerTests {
 	}
 
 	@Test
-	void shouldReturnDefaultMessage() throws Exception {
+	void shouldReturnTodoList() throws Exception {
 		this.mockMvc.perform(get("/todo").accept(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(status().isOk())
 				.andDo(
 						// target/generated-snippets/todo
-						document("todo",
+						document("todoList",
 								responseFields(fieldWithPath("[].id").description("uniqe todo id"),
 										(fieldWithPath("[].activityName").description("activity name")),
 										(fieldWithPath("[].color").description("color")),
 										(fieldWithPath("[].category").description("category")))));
+	}
+
+	@Test
+	void shouldReturnTodo() throws Exception {
+		this.mockMvc.perform(get("/todo/1").accept(MediaType.APPLICATION_JSON)).andDo(print())
+				.andExpect(status().isOk())
+				.andDo(document("todo",
+						responseFields(fieldWithPath("id").description("uniqe todo id"),
+								(fieldWithPath("activityName").description("activity name")),
+								(fieldWithPath("color").description("color")),
+								(fieldWithPath("category").description("category")))));
 	}
 
 }

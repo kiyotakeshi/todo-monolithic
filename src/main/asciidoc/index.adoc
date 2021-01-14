@@ -1,0 +1,15 @@
+= Todo app API reference
+
+service running at http://localhost:8081:
+
+.curl
+include::{snippets}/todo/curl-request.adoc[]
+
+.request
+include::{snippets}/todo/http-request.adoc[]
+
+.response
+include::{snippets}/todo/http-response.adoc[]
+
+.response-fields
+include::{snippets}/todo/response-fields.adoc[]

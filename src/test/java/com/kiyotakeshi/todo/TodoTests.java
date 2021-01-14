@@ -9,14 +9,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-class TodoApplicationTests {
+class TodoTests {
 
 	@Autowired
 	TestEntityManager em;
 
 	@Test
-	void todo() {
-		var todo1 = this.em.find(Todo.class, 1000);
+	void mapping() {
+		var todo1 = this.em.find(Todo.class, 1000L);
 		assertThat(todo1.getActivityName()).isEqualTo("go to supermarket");
+		assertThat(todo1.getCategory()).isEqualTo("housework");
+		assertThat(todo1.getColor()).isEqualTo("white");
 	}
+
 }

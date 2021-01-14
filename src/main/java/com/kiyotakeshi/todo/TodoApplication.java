@@ -17,32 +17,33 @@ public class TodoApplication {
 	}
 
 	@Bean
-	public CommandLineRunner demo(TodoRepository repository){
+	public CommandLineRunner demo(TodoRepository repository) {
 		return (args -> {
-			repository.save(new Todo("wash dishes","white", "housework"));
-			repository.save(new Todo("throw garbage", "white","housework"));
-			repository.save(new Todo("go to office","black", "job"));
-			repository.save(new Todo("turn on documents", "black","job"));
-			repository.save(new Todo("make a presentation","black", "job"));
+			repository.save(new Todo("wash dishes", "white", "housework"));
+			repository.save(new Todo("throw garbage", "white", "housework"));
+			repository.save(new Todo("go to office", "black", "job"));
+			repository.save(new Todo("turn on documents", "black", "job"));
+			repository.save(new Todo("make a presentation", "black", "job"));
 
 			log.info("Todo found with findAll()");
 			log.info("------------------------------");
-			for (Todo customer: repository.findAll()){
+			for (Todo customer : repository.findAll()) {
 				log.info(customer.toString());
 			}
 			log.info("");
 
-			Todo customer = repository.findById(1L);
+			Todo customer = repository.findById(1L).orElseThrow();
 			log.info("Todo found with findById(1L):");
 			log.info("------------------------------");
 			log.info(customer.toString());
 			log.info("");
 
-			log.info("Todo found with findByActivityName('housework'):");
-			repository.findByActivityName("housework").forEach(housework -> {
-				log.info(housework.toString());
+			log.info("Todo found with findByCategor;y('job'):");
+			repository.findByCategory("job").forEach(job -> {
+				log.info(job.toString());
 			});
 			log.info("");
 		});
 	}
+
 }

@@ -9,6 +9,6 @@ import java.util.Optional;
 @Repository
 public interface TodoRepository extends JpaRepository<Todo, Long> {
 
-    Todo findById(long id);
-    List<Todo> findByActivityName(String activityName);
+	List<Todo> findByCategory(String category);
+
 }

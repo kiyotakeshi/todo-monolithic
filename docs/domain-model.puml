@@ -1,42 +1,42 @@
 @startuml
 package Sample <<Cloud>> {
-    class Sample
-    class SampleContents
-    class CreateSample
+    class Todo
+'    class SampleContents
+'    class CreateSample
 }
-Sample *-- SampleContents
-SampleContents --> Sample2
+'Sample *-- SampleContents
+'SampleContents --> Sample2
 
-package Sample2 <<Cloud>> {
-    class Sample2
-}
+'package Sample2 <<Cloud>> {
+'    class Sample2
+'}
 
-class Sample2 << (A,#f6d53d) AggregateRoot >> {
-    productNo: String
-    name: String
-    price: MonetaryAmount
-    hasStock()
-    reduceStock()
-}
+'class Sample2 << (A,#f6d53d) AggregateRoot >> {
+'    productNo: String
+'    name: String
+'    price: MonetaryAmount
+'    hasStock()
+'    reduceStock()
+'}
 
-class Sample << (A,#f6d53d) AggregateRoot >> {
-    customer: String
-    orderNo: String
-    orderDate: LocalDate
-    lines: List<SampleContents>
-}
-
-class SampleContents << (E,#f6d53d) Entity >>  {
-    product: Sample2.ProductAssociation
-    name: String
-    price: MonetaryAmount
-    quantity: int
+class Todo << (A,#f6d53d) AggregateRoot >> {
+    activityName: String
+    color: String
+    category: String
+'    lines: List<SampleContents>
 }
 
-class CreateSample << (C,#acd0f6) Command >> {
-    lines: List<SampleContents>
-    customerName: String
-    creditCardNumber: String
-}
+'class SampleContents << (E,#f6d53d) Entity >>  {
+'    product: Sample2.ProductAssociation
+'    name: String
+'    price: MonetaryAmount
+'    quantity: int
+'}
+
+'class CreateSample << (C,#acd0f6) Command >> {
+'    lines: List<SampleContents>
+'    customerName: String
+'    creditCardNumber: String
+'}
 
 @enduml

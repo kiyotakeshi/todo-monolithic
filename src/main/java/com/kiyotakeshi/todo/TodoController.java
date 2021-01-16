@@ -1,10 +1,8 @@
 package com.kiyotakeshi.todo;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,7 +23,17 @@ public class TodoController {
 
 	@GetMapping("/todo/{id}")
 	public Todo getTodo(@PathVariable("id") Long id) {
-		return todoRepository.findById(id).orElseThrow();
+		return this.todoRepository.findById(id).orElseThrow();
 	}
+
+	@PostMapping("/todo")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Todo createTodo(Todo todo) {
+		return this.todoRepository.save(todo);
+	}
+
+	// TODO: update
+
+	// TODO: delete
 
 }

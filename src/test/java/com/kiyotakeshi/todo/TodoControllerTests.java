@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
@@ -53,7 +54,7 @@ class TodoControllerTests {
 		this.mockMvc.perform(get("/todo").accept(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(status().isOk())
 				.andDo(
 						// target/generated-snippets/todo
-						document("todoList",
+						document("getTodoList",
 								responseFields(fieldWithPath("[].id").description("uniqe todo id"),
 										(fieldWithPath("[].activityName").description("activity name")),
 										(fieldWithPath("[].color").description("color")),
@@ -64,11 +65,20 @@ class TodoControllerTests {
 	void shouldReturnTodo() throws Exception {
 		this.mockMvc.perform(get("/todo/1").accept(MediaType.APPLICATION_JSON)).andDo(print())
 				.andExpect(status().isOk())
-				.andDo(document("todo",
+				.andExpect(content().json(
+						"{\"id\":1,\"activityName\":\"wash dishes\",\"color\":\"white\",\"category\":\"housework\"}"))
+				.andDo(document("getTodo",
 						responseFields(fieldWithPath("id").description("uniqe todo id"),
 								(fieldWithPath("activityName").description("activity name")),
 								(fieldWithPath("color").description("color")),
 								(fieldWithPath("category").description("category")))));
+	}
+
+	@Test
+	void shouldCreateTodo() throws Exception {
+		this.mockMvc
+				.perform(post("/todo/").param("activityName", "test").param("color", "black").param("category", "test"))
+				.andExpect(status().isCreated()).andDo(document("postTodo"));
 	}
 
 }

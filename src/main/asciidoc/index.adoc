@@ -2,30 +2,40 @@
 
 service running at http://localhost:8081:
 
-== Single Todo
+== GET
+
+=== Single Todo
 
 .curl
-include::{snippets}/todo/curl-request.adoc[]
+include::{snippets}/getTodo/curl-request.adoc[]
 
 .request
-include::{snippets}/todo/http-request.adoc[]
+include::{snippets}/getTodo/http-request.adoc[]
 
 .response
-include::{snippets}/todo/http-response.adoc[]
+include::{snippets}/getTodo/http-response.adoc[]
 
 .response-fields
-include::{snippets}/todo/response-fields.adoc[]
+include::{snippets}/getTodo/response-fields.adoc[]
 
-== Todo List
+=== Todo List
 
 .curl
-include::{snippets}/todoList/curl-request.adoc[]
+include::{snippets}/getTodoList/curl-request.adoc[]
 
 .request
-include::{snippets}/todoList/http-request.adoc[]
+include::{snippets}/getTodoList/http-request.adoc[]
 
 .response
-include::{snippets}/todoList/http-response.adoc[]
+include::{snippets}/getTodoList/http-response.adoc[]
 
 .response-fields
-include::{snippets}/todoList/response-fields.adoc[]
+include::{snippets}/getTodoList/response-fields.adoc[]
+
+== POST
+
+.curl
+include::{snippets}/postTodo/curl-request.adoc[]
+
+.response
+include::{snippets}/postTodo/http-response.adoc[]

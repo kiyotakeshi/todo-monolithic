@@ -16,6 +16,8 @@ public class Todo {
 
 	private String activityName;
 
+	// private boolean done;
+
 	private String color;
 
 	private String category;
@@ -37,12 +39,24 @@ public class Todo {
 		return activityName;
 	}
 
+	public void setActivityName(String activityName) {
+		this.activityName = activityName;
+	}
+
 	public String getColor() {
 		return color;
 	}
 
+	public void setColor(String color) {
+		this.color = color;
+	}
+
 	public String getCategory() {
 		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	@Override

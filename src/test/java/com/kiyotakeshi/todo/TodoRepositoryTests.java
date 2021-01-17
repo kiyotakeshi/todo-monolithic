@@ -12,17 +12,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 class TodoRepositoryTests {
 
 	@Autowired
-	TodoRepository todoRepository;
+	TodoRepository repository;
 
 	@Test
 	void name() {
-		Todo todo = this.todoRepository.findById(1000L).orElseThrow();
+		Todo todo = this.repository.findById(1000L).orElseThrow();
 		assertThat(todo.getActivityName()).isEqualTo("go to supermarket");
 	}
 
 	@Test
 	void findByActivityName() {
-		List<Todo> todoByCategory = this.todoRepository.findByCategory("hobby");
+		List<Todo> todoByCategory = this.repository.findByCategory("hobby");
 		assertThat(todoByCategory).hasSize(1);
 		assertThat(todoByCategory.get(0).getActivityName()).isEqualTo("listen to music");
 	}

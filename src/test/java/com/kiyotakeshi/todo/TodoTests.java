@@ -22,4 +22,14 @@ class TodoTests {
 		assertThat(todo1.getColor()).isEqualTo("white");
 	}
 
+	@Test
+	void update() {
+		var todo1 = this.em.find(Todo.class, 1000L);
+		todo1.setActivityName("go to bank");
+		this.em.persistAndFlush(todo1);
+
+		var updatedTodo1 = this.em.find(Todo.class, 1000L);
+		assertThat(updatedTodo1.getActivityName()).isEqualTo("go to bank");
+	}
+
 }

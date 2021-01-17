@@ -1,7 +1,6 @@
 package com.kiyotakeshi.todo;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,29 +9,33 @@ import java.util.List;
 @RequestMapping
 public class TodoController {
 
-	final TodoRepository todoRepository;
+	final TodoService todoService;
 
-	public TodoController(TodoRepository todoRepository) {
-		this.todoRepository = todoRepository;
+	public TodoController(TodoService todoService) {
+		this.todoService = todoService;
 	}
 
 	@GetMapping("/todo")
 	public List<Todo> getTodoList() {
-		return this.todoRepository.findAll();
+		return this.todoService.findAll();
 	}
 
 	@GetMapping("/todo/{id}")
 	public Todo getTodo(@PathVariable("id") Long id) {
-		return this.todoRepository.findById(id).orElseThrow();
+		return this.todoService.findById(id).orElseThrow();
 	}
-
+	
 	@PostMapping("/todo")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Todo createTodo(Todo todo) {
-		return this.todoRepository.save(todo);
+		return this.todoService.save(todo);
 	}
 
-	// TODO: update
+	@PutMapping("/todo/{id}")
+	@ResponseStatus(HttpStatus.OK)
+	public Todo updateTodo(@PathVariable("id") Long id, Todo todo) {
+		return this.todoService.save(todo);
+	}
 
 	// TODO: delete
 

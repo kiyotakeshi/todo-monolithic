@@ -24,7 +24,7 @@ public class TodoController {
 	public Todo getTodo(@PathVariable("id") Long id) {
 		return this.todoService.findById(id).orElseThrow();
 	}
-	
+
 	@PostMapping("/todo")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Todo createTodo(Todo todo) {

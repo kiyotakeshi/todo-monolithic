@@ -78,7 +78,10 @@ class TodoControllerTests {
 	void shouldCreateTodo() throws Exception {
 		this.mockMvc
 				.perform(post("/todo/").param("activityName", "test").param("color", "black").param("category", "test"))
-				.andExpect(status().isCreated()).andDo(document("postTodo"));
+				.andExpect(status().isCreated())
+				.andExpect(content().json(
+						"{\"id\":6,\"activityName\":\"test\",\"color\":\"black\",\"category\":\"test\"}"))
+				.andDo(document("postTodo"));
 	}
 
 }

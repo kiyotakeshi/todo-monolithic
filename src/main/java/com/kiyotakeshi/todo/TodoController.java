@@ -43,6 +43,10 @@ public class TodoController {
 		return this.todoService.updateTodo(id, update);
 	}
 
-	// TODO: delete
+	@DeleteMapping(value = "{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void deleteTodo(@PathVariable("id") Long id) {
+		this.todoService.deleteTodo(id);
+	}
 
 }

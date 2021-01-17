@@ -18,7 +18,7 @@ include::{snippets}/getTodo/http-response.adoc[]
 .response-fields
 include::{snippets}/getTodo/response-fields.adoc[]
 
-=== Todo List
+=== All Todo
 
 .curl
 include::{snippets}/getTodoList/curl-request.adoc[]
@@ -39,3 +39,20 @@ include::{snippets}/postTodo/curl-request.adoc[]
 
 .response
 include::{snippets}/postTodo/http-response.adoc[]
+
+== PUT
+
+.curl
+include::{snippets}/putTodo/curl-request.adoc[]
+
+.response
+include::{snippets}/putTodo/http-response.adoc[]
+
+
+== Delete
+
+.curl
+include::{snippets}/deleteTodo/curl-request.adoc[]
+
+.response
+include::{snippets}/deleteTodo/http-response.adoc[]

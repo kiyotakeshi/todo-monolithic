@@ -5,9 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 @DataJpaTest
 class TodoServiceTests {
@@ -25,7 +26,7 @@ class TodoServiceTests {
 
 	@Test
 	void findById() {
-		Todo todo = this.repository.findById(1000L).orElseThrow();
+		var todo = this.repository.findById(1000L).orElseThrow();
 		assertThat(todo.getActivityName()).isEqualTo("go to supermarket");
 	}
 
@@ -59,5 +60,16 @@ class TodoServiceTests {
 		assertThat(newTodo.getCategory()).isEqualTo("free");
 	}
 
+	@Test
+	void deleteTodo() {
+		int before = this.repository.findAll().size();
+		this.repository.deleteById(1001L);
+		int after = this.repository.findAll().size();
+		assertThat(after).isEqualTo(before - 1);
+
+		assertThatExceptionOfType(NoSuchElementException.class).isThrownBy(() -> {
+			this.repository.findById(1001L).get();
+		});
+	}
 
 }

@@ -32,6 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureRestDocs(outputDir = "target/generated-snippets")
 class TodoControllerTests {
 
+	private final String BASE_PATH = "/todo/";
+
 	@Autowired
 	private MockMvc mockMvc;
 
@@ -52,7 +54,7 @@ class TodoControllerTests {
 
 	@Test
 	void shouldReturnTodoList() throws Exception {
-		this.mockMvc.perform(get("/todo") //
+		this.mockMvc.perform(get(BASE_PATH) //
 				.accept(MediaType.APPLICATION_JSON)) //
 				.andDo(print()) //
 				.andExpect(status().isOk()) //
@@ -66,7 +68,7 @@ class TodoControllerTests {
 
 	@Test
 	void shouldReturnTodo() throws Exception {
-		this.mockMvc.perform(get("/todo/1000") //
+		this.mockMvc.perform(get(BASE_PATH + "1000") //
 				.accept(MediaType.APPLICATION_JSON)) //
 				.andDo(print()) //
 				.andExpect(status().isOk()) //
@@ -82,7 +84,7 @@ class TodoControllerTests {
 
 	@Test
 	void shouldCreateTodo() throws Exception {
-		this.mockMvc.perform(post("/todo/") //
+		this.mockMvc.perform(post(BASE_PATH) //
 				.param("activityName", "test") //
 				.param("color", "black") //
 				.param("category", "test")) //
@@ -95,7 +97,7 @@ class TodoControllerTests {
 	@Test
 	@DirtiesContext // after this test is run, spring would automatically reset the date
 	void shouldUpdateTodo() throws Exception {
-		this.mockMvc.perform(put("/todo/1000") //
+		this.mockMvc.perform(put(BASE_PATH + "1000") //
 				.param("activityName", "update") //
 				.param("color", "red") //
 				.param("category", "update")) //
@@ -103,6 +105,15 @@ class TodoControllerTests {
 				.andExpect(content()
 						.json("{\"id\":1000,\"activityName\":\"update\",\"color\":\"red\",\"category\":\"update\"}"))
 				.andDo(document("putTodo"));
+	}
+
+	@Test
+	@DirtiesContext
+	void shouldDeleteTodo() throws Exception {
+		this.mockMvc.perform(delete(BASE_PATH + "1000")) //
+				// ref https://developer.mozilla.org/ja/docs/Web/HTTP/Methods/DELETE
+				.andExpect(status().isNoContent()) //
+				.andDo(document("deleteTodo"));
 	}
 
 }

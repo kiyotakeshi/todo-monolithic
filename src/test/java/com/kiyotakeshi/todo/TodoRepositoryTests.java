@@ -15,13 +15,13 @@ class TodoRepositoryTests {
 	TodoRepository repository;
 
 	@Test
-	void name() {
+	void findById() {
 		Todo todo = this.repository.findById(1000L).orElseThrow();
 		assertThat(todo.getActivityName()).isEqualTo("go to supermarket");
 	}
 
 	@Test
-	void findByActivityName() {
+	void findByCategory() {
 		List<Todo> todoByCategory = this.repository.findByCategory("hobby");
 		assertThat(todoByCategory).hasSize(1);
 		assertThat(todoByCategory.get(0).getActivityName()).isEqualTo("listen to music");

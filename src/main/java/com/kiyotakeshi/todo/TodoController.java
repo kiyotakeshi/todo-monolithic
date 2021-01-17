@@ -38,17 +38,9 @@ public class TodoController {
 
 	@PutMapping(value = "/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public Todo updateTodo(@PathVariable("id") Long id,Todo updateValue) {
-		logger.info("Update start");
-		logger.info("updateValue -> {}", updateValue);
-		Todo todo = this.todoService.findById(id).orElseThrow();
-
-		todo.setActivityName(updateValue.getActivityName());
-		todo.setCategory(updateValue.getCategory());
-		todo.setColor(updateValue.getColor());
-		var updatedTodo = this.todoService.updateTodo(todo);
-		logger.info("Update end");
-		return updatedTodo;
+	public Todo updateTodo(@PathVariable("id") Long id, Todo update) {
+		logger.info("update valed -> {}", update);
+		return this.todoService.updateTodo(id, update);
 	}
 
 	// TODO: delete

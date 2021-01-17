@@ -76,12 +76,26 @@ class TodoControllerTests {
 
 	@Test
 	void shouldCreateTodo() throws Exception {
-		this.mockMvc
-				.perform(post("/todo/").param("activityName", "test").param("color", "black").param("category", "test"))
-				.andExpect(status().isCreated())
-				.andExpect(content().json(
-						"{\"id\":6,\"activityName\":\"test\",\"color\":\"black\",\"category\":\"test\"}"))
+		this.mockMvc.perform(post("/todo/") //
+				.param("activityName", "test") //
+				.param("color", "black") //
+				.param("category", "test")) //
+				.andExpect(status().isCreated()) //
+				.andExpect(content()
+						.json("{\"id\":6,\"activityName\":\"test\",\"color\":\"black\",\"category\":\"test\"}"))
 				.andDo(document("postTodo"));
+	}
+
+	@Test
+	void shouldUpdateTodo() throws Exception {
+		this.mockMvc.perform(put("/todo/5") //
+				.param("activityName", "update") //
+				.param("color", "red") //
+				.param("category", "update")) //
+				.andExpect(status().isOk()) //
+                .andExpect(content()
+                .json("{\"id\":5,\"activityName\":\"update\",\"color\":\"red\",\"category\":\"update\"}"))
+                .andDo(document("putTodo"));
 	}
 
 }

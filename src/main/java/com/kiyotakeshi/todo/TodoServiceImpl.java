@@ -35,7 +35,11 @@ public class TodoServiceImpl implements TodoService {
 	}
 
 	@Override
-	public Todo updateTodo(Todo todo) {
+	public Todo updateTodo(Long id, Todo update) {
+		var todo = this.findById(id).orElseThrow();
+		todo.setActivityName(update.getActivityName());
+		todo.setColor(update.getColor());
+		todo.setCategory(update.getCategory());
 		return this.todoRepository.save(todo);
 	}
 

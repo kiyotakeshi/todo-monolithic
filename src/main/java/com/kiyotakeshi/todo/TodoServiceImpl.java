@@ -34,4 +34,9 @@ public class TodoServiceImpl implements TodoService {
 		return this.todoRepository.findByCategory(hobby);
 	}
 
+	@Override
+	public Todo updateTodo(Todo todo) {
+		return this.todoRepository.save(todo);
+	}
+
 }

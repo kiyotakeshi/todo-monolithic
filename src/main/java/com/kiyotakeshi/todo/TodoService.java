@@ -13,4 +13,6 @@ public interface TodoService {
 
 	List<Todo> findByCategory(String hobby);
 
+	Todo updateTodo(Todo todo);
+
 }

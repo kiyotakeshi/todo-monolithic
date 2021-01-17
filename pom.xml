@@ -12,7 +12,6 @@
     <artifactId>todo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>todo</name>
-    <description>Simple todo app</description>
 
     <properties>
         <java.version>11</java.version>
@@ -95,6 +94,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <imageName>${project.artifactId}:${project.version}</imageName>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>io.spring.javaformat</groupId>

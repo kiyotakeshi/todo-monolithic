@@ -450,14 +450,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="listingblock">
 <div class="title">curl</div>
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8081/todo/1' -i -X GET \
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8081/todo/1000' -i -X GET \
     -H 'Accept: application/json'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">request</div>
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /todo/1 HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /todo/1000 HTTP/1.1
 Accept: application/json
 Host: localhost:8081</code></pre>
 </div>
@@ -467,9 +467,9 @@ Host: localhost:8081</code></pre>
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json
-Content-Length: 76
+Content-Length: 85
 
-{"id":1,"activityName":"wash dishes","color":"white","category":"housework"}</code></pre>
+{"id":1000,"activityName":"go to supermarket","color":"white","category":"housework"}</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -490,7 +490,7 @@ Content-Length: 76
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">uniqe todo id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">unique todo id</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>activityName</code></p></td>
@@ -511,18 +511,18 @@ Content-Length: 76
 </table>
 </div>
 <div class="sect2">
-<h3 id="_todo_list">Todo List</h3>
+<h3 id="_all_todo">All Todo</h3>
 <div class="listingblock">
 <div class="title">curl</div>
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8081/todo' -i -X GET \
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8081/todo/' -i -X GET \
     -H 'Accept: application/json'</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">request</div>
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /todo HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /todo/ HTTP/1.1
 Accept: application/json
 Host: localhost:8081</code></pre>
 </div>
@@ -532,9 +532,9 @@ Host: localhost:8081</code></pre>
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json
-Content-Length: 698
+Content-Length: 249
 
-[{"id":1,"activityName":"wash dishes","color":"white","category":"housework"},{"id":2,"activityName":"throw garbage","color":"white","category":"housework"},{"id":3,"activityName":"go to office","color":"black","category":"job"},{"id":4,"activityName":"turn on documents","color":"black","category":"job"},{"id":5,"activityName":"make a presentation","color":"black","category":"job"},{"id":6,"activityName":"test","color":"black","category":"test"},{"id":1000,"activityName":"go to supermarket","color":"white","category":"housework"},{"id":1001,"activityName":"listen to music","color":"white","category":"hobby"},{"id":1002,"activityName":"make a presentation","color":"black","category":"job"}]</code></pre>
+[{"id":1000,"activityName":"go to supermarket","color":"white","category":"housework"},{"id":1001,"activityName":"listen to music","color":"white","category":"hobby"},{"id":1002,"activityName":"make a presentation","color":"black","category":"job"}]</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -594,7 +594,46 @@ Content-Length: 698
 Content-Type: application/json
 Content-Length: 64
 
-{"id":6,"activityName":"test","color":"black","category":"test"}</code></pre>
+{"id":1,"activityName":"test","color":"black","category":"test"}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_put">PUT</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="title">curl</div>
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8081/todo/1000' -i -X PUT \
+    -d 'activityName=update&amp;color=red&amp;category=update'</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">response</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 69
+
+{"id":1000,"activityName":"update","color":"red","category":"update"}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_delete">Delete</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="title">curl</div>
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8081/todo/1000' -i -X DELETE</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">response</div>
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 204 No Content</code></pre>
 </div>
 </div>
 </div>
@@ -602,7 +641,7 @@ Content-Length: 64
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-01-17 01:25:06 +0900
+Last updated 2021-01-17 16:33:01 +0900
 </div>
 </div>
 </body>

@@ -1,4 +1,4 @@
-package com.kiyotakeshi.todo;
+package com.kiyotakeshi.todo.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

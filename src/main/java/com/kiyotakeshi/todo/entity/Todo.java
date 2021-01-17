@@ -1,4 +1,4 @@
-package com.kiyotakeshi.todo;
+package com.kiyotakeshi.todo.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 

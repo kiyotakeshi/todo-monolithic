@@ -1,5 +1,7 @@
-package com.kiyotakeshi.todo;
+package com.kiyotakeshi.todo.service;
 
+import com.kiyotakeshi.todo.entity.Todo;
+import com.kiyotakeshi.todo.repository.TodoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

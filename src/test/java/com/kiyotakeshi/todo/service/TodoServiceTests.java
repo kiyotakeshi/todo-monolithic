@@ -1,12 +1,13 @@
-package com.kiyotakeshi.todo;
+package com.kiyotakeshi.todo.service;
 
+import com.kiyotakeshi.todo.entity.Todo;
+import com.kiyotakeshi.todo.repository.TodoRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 

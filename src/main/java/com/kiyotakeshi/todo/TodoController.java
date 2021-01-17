@@ -31,12 +31,14 @@ public class TodoController {
 	}
 
 	@PostMapping
+	// ref https://developer.mozilla.org/ja/docs/Web/HTTP/Status/201
 	@ResponseStatus(HttpStatus.CREATED)
 	public Todo createTodo(Todo todo) {
 		return this.todoService.save(todo);
 	}
 
 	@PutMapping(value = "/{id}")
+	// ref https://developer.mozilla.org/ja/docs/Web/HTTP/Methods/PUT
 	@ResponseStatus(HttpStatus.OK)
 	public Todo updateTodo(@PathVariable("id") Long id, Todo update) {
 		logger.info("update valed -> {}", update);
@@ -44,6 +46,7 @@ public class TodoController {
 	}
 
 	@DeleteMapping(value = "{id}")
+	// ref https://developer.mozilla.org/ja/docs/Web/HTTP/Methods/DELETE
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteTodo(@PathVariable("id") Long id) {
 		this.todoService.deleteTodo(id);

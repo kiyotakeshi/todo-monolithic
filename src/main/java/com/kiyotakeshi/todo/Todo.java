@@ -16,8 +16,11 @@ public class Todo {
 
 	private String activityName;
 
+	// TODO:
 	// private boolean done;
 
+	// TODO:
+	// private enum color;
 	private String color;
 
 	private String category;

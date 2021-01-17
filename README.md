@@ -1,10 +1,14 @@
 # Todo
 
-## [API Reference](./src/main/resources/templates/index.html)
+## [API Reference](./src/main/asciidoc/index.adoc)
+
+- this is .adoc ,so run application and access [http://localhost:8081](http://localhost:8081)
 
 ## [Domain Model](./docs/domain-model.puml)
 
 ## Run local
+
+- set jdk 11
 
 ```shell
 export JAVA_HOME=~/Library/Java/JavaVirtualMachines/adopt-openjdk-11.0.8/Contents/Home

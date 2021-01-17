@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
@@ -51,27 +52,32 @@ class TodoControllerTests {
 
 	@Test
 	void shouldReturnTodoList() throws Exception {
-		this.mockMvc.perform(get("/todo").accept(MediaType.APPLICATION_JSON)).andDo(print()).andExpect(status().isOk())
-				.andDo(
-						// target/generated-snippets/todo
-						document("getTodoList",
-								responseFields(fieldWithPath("[].id").description("uniqe todo id"),
-										(fieldWithPath("[].activityName").description("activity name")),
-										(fieldWithPath("[].color").description("color")),
-										(fieldWithPath("[].category").description("category")))));
+		this.mockMvc.perform(get("/todo") //
+				.accept(MediaType.APPLICATION_JSON)) //
+				.andDo(print()) //
+				.andExpect(status().isOk()) //
+				.andDo(document("getTodoList", // target/generated-snippets/getTodoList
+						responseFields(fieldWithPath("[].id").description("uniqe todo id"), //
+								(fieldWithPath("[].activityName").description("activity name")), //
+								(fieldWithPath("[].color").description("color")), //
+								(fieldWithPath("[].category").description("category")) //
+						)));
 	}
 
 	@Test
 	void shouldReturnTodo() throws Exception {
-		this.mockMvc.perform(get("/todo/1").accept(MediaType.APPLICATION_JSON)).andDo(print())
-				.andExpect(status().isOk())
+		this.mockMvc.perform(get("/todo/1000") //
+				.accept(MediaType.APPLICATION_JSON)) //
+				.andDo(print()) //
+				.andExpect(status().isOk()) //
 				.andExpect(content().json(
-						"{\"id\":1,\"activityName\":\"wash dishes\",\"color\":\"white\",\"category\":\"housework\"}"))
-				.andDo(document("getTodo",
-						responseFields(fieldWithPath("id").description("uniqe todo id"),
-								(fieldWithPath("activityName").description("activity name")),
-								(fieldWithPath("color").description("color")),
-								(fieldWithPath("category").description("category")))));
+						"{\"id\":1000,\"activityName\":\"go to supermarket\",\"color\":\"white\",\"category\":\"housework\"}"))
+				.andDo(document("getTodo", //
+						responseFields(fieldWithPath("id").description("unique todo id"), //
+								(fieldWithPath("activityName").description("activity name")), //
+								(fieldWithPath("color").description("color")), //
+								(fieldWithPath("category").description("category")) //
+						)));
 	}
 
 	@Test
@@ -82,19 +88,20 @@ class TodoControllerTests {
 				.param("category", "test")) //
 				.andExpect(status().isCreated()) //
 				.andExpect(content()
-						.json("{\"id\":6,\"activityName\":\"test\",\"color\":\"black\",\"category\":\"test\"}"))
+						.json("{\"id\":1,\"activityName\":\"test\",\"color\":\"black\",\"category\":\"test\"}"))
 				.andDo(document("postTodo"));
 	}
 
 	@Test
+	@DirtiesContext // after this test is run, spring would automatically reset the date
 	void shouldUpdateTodo() throws Exception {
-		this.mockMvc.perform(put("/todo/5") //
+		this.mockMvc.perform(put("/todo/1000") //
 				.param("activityName", "update") //
 				.param("color", "red") //
 				.param("category", "update")) //
 				.andExpect(status().isOk()) //
 				.andExpect(content()
-						.json("{\"id\":5,\"activityName\":\"update\",\"color\":\"red\",\"category\":\"update\"}"))
+						.json("{\"id\":1000,\"activityName\":\"update\",\"color\":\"red\",\"category\":\"update\"}"))
 				.andDo(document("putTodo"));
 	}
 

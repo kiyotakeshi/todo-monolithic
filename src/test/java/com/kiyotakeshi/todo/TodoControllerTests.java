@@ -93,9 +93,9 @@ class TodoControllerTests {
 				.param("color", "red") //
 				.param("category", "update")) //
 				.andExpect(status().isOk()) //
-                .andExpect(content()
-                .json("{\"id\":5,\"activityName\":\"update\",\"color\":\"red\",\"category\":\"update\"}"))
-                .andDo(document("putTodo"));
+				.andExpect(content()
+						.json("{\"id\":5,\"activityName\":\"update\",\"color\":\"red\",\"category\":\"update\"}"))
+				.andDo(document("putTodo"));
 	}
 
 }

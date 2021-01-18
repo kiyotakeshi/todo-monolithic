@@ -1,15 +1,13 @@
 package com.kiyotakeshi.todo.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Todo {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // 自動インクリメントで一意の値を生成
+	// sequence を指定して作成する場合
 	// @GeneratedValue(generator = "todo_id_gen")
 	// @SequenceGenerator(name = "todo_id_gen", sequenceName = "todo_id_seq",
 	// allocationSize = 1)

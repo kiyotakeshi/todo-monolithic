@@ -61,5 +61,9 @@ pack build todo:$ARTIFACT_VERSION -p target/todo-$ARTIFACT_VERSION.jar --builder
 ```shell
 docker image ls | grep todo
 
-docker run -p 8081:8081 todo:TAG_VERSION
+export TODO_ARTIFACT_VERSION=$(./mvnw org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout)
+
+docker-compose -f app.yaml up -d
+
+docker-compose -f app.yaml ps
 ```

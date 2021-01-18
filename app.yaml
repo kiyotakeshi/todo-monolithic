@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: postgres:11.10
+    container_name: todo-postgres
+    ports:
+      - 5432:5432
+  #  volumes:
+  #    - ./postgres/init:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: todo
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+    restart: always
+  todo:
+    image: todo:$TODO_ARTIFACT_VERSION
+    container_name: todo
+    ports:
+      - 8081:8081
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://todo-postgres:5432/todo
+    depends_on:
+      - postgres

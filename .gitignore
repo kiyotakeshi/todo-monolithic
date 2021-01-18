@@ -34,3 +34,4 @@ build/
 
 ### custom ###
 /src/main/resources/templates/index.html
+.docker/postgres/**

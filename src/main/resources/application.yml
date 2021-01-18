@@ -3,9 +3,18 @@ server:
 spring:
   jpa:
     show-sql: true
+#  security:
+#    user:
+#      name: user
+#      password: aaaaaaaaaaaaa
   datasource:
-    url: jdbc:h2:mem:todo
-    initialization-mode: ALWAYS
-  h2:
-    console:
-      enabled: true
+    url: jdbc:postgresql://localhost:5432/todo
+    driverClassName: org.postgresql.Driver
+    username: postgres
+    password: password
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    baseline-description: Initial
+#    @see org/springframework/boot/autoconfigure/flyway/FlywayProperties.java
+    locations: "classpath:db/migration"

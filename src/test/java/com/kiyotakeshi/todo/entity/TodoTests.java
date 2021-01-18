@@ -1,6 +1,5 @@
 package com.kiyotakeshi.todo.entity;
 
-import com.kiyotakeshi.todo.entity.Todo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -20,6 +19,12 @@ class TodoTests {
 		assertThat(todo1.getActivityName()).isEqualTo("go to supermarket");
 		assertThat(todo1.getCategory()).isEqualTo("housework");
 		assertThat(todo1.getColor()).isEqualTo("white");
+	}
+
+	@Test
+	void newTodo() {
+		var todo = new Todo("new", "white", "test");
+		this.em.persistAndFlush(todo);
 	}
 
 	@Test

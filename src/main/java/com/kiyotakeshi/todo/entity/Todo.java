@@ -1,17 +1,18 @@
 package com.kiyotakeshi.todo.entity;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Todo {
 
 	@Id
-	@GeneratedValue
-	@JsonSerialize
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // 自動インクリメントで一意の値を生成
+	// @GeneratedValue(generator = "todo_id_gen")
+	// @SequenceGenerator(name = "todo_id_gen", sequenceName = "todo_id_seq",
+	// allocationSize = 1)
 	private Long id;
 
 	private String activityName;

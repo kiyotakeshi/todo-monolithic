@@ -11,16 +11,24 @@
 - set jdk 11
 
 ```shell
-export JAVA_HOME=~/Library/Java/JavaVirtualMachines/adopt-openjdk-11.0.8/Contents/Home
+export JAVA_HOME=`/usr/libexec/java_home -v 11`
+
+java -version
 ```
 
-- spring
+- run postgres
+
+```shell
+docker-compose up -d
+```
+
+- run application as a spring-boot
 
 ```shell
 ./mvnw spring-boot:run
 ```
 
-- maven
+- run application as a jar using maven
 
 ```shell
 ./mvnw clean package

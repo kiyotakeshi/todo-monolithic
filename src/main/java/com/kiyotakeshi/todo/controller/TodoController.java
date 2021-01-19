@@ -39,8 +39,11 @@ public class TodoController {
 	@PostMapping
 	// ref https://developer.mozilla.org/ja/docs/Web/HTTP/Status/201
 	@ResponseStatus(HttpStatus.CREATED)
-	public Todo createTodo(Todo todo) {
-		return this.todoService.save(todo);
+	public ResponseEntity<Todo> createTodo(Todo todo) {
+		var savedTodo = this.todoService.save(todo);
+		return ResponseEntity
+				.created(URI.create("/todo/" + savedTodo.getId()))
+				.body(savedTodo);
 	}
 
 	@PutMapping(value = "/{id}")

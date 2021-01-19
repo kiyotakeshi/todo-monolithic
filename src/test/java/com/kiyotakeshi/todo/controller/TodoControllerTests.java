@@ -95,6 +95,8 @@ class TodoControllerTests {
 				.param("color", "black") //
 				.param("category", "test")) //
 				.andExpect(status().isCreated()) //
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(header().string("Location",BASE_PATH + 1003))
 				.andExpect(content()
 						.json("{\"id\":1003,\"activityName\":\"test\",\"color\":\"black\",\"category\":\"test\"}"))
 				.andDo(document("postTodo"));

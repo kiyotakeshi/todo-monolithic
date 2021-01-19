@@ -79,12 +79,12 @@ class TodoControllerTests {
 	}
 
 	@Test
-	void shouldReturnNotFoundException() throws Exception {
+	void shouldReturnNotFound() throws Exception {
 
-		this.mockMvc.perform(get(BASE_PATH + "10000")
-				.accept(MediaType.APPLICATION_JSON))
-				.andDo(print())
-				.andExpect(status().isNotFound())
+		this.mockMvc.perform(get(BASE_PATH + "10000") //
+				.accept(MediaType.APPLICATION_JSON)) //
+				.andDo(print()) //
+				.andExpect(status().isNotFound()) //
 				.andDo(document("notGetTodo"));
 	}
 
@@ -96,7 +96,7 @@ class TodoControllerTests {
 				.param("category", "test")) //
 				.andExpect(status().isCreated()) //
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
-				.andExpect(header().string("Location",BASE_PATH + 1003))
+				.andExpect(header().string("Location", BASE_PATH + 1003))
 				.andExpect(content()
 						.json("{\"id\":1003,\"activityName\":\"test\",\"color\":\"black\",\"category\":\"test\"}"))
 				.andDo(document("postTodo"));

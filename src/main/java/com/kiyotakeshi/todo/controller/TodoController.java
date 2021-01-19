@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.net.URI;
 import java.util.List;
@@ -31,9 +30,7 @@ public class TodoController {
 
 	@GetMapping(value = "/{id}")
 	public Todo getTodo(@PathVariable("id") Long id) {
-		return this.todoService.findById(id).orElseThrow(() ->
-			new ResponseStatusException(HttpStatus.NOT_FOUND)
-		);
+		return this.todoService.findById(id);
 	}
 
 	@PostMapping
@@ -41,9 +38,7 @@ public class TodoController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<Todo> createTodo(Todo todo) {
 		var savedTodo = this.todoService.save(todo);
-		return ResponseEntity
-				.created(URI.create("/todo/" + savedTodo.getId()))
-				.body(savedTodo);
+		return ResponseEntity.created(URI.create("/todo/" + savedTodo.getId())).body(savedTodo);
 	}
 
 	@PutMapping(value = "/{id}")

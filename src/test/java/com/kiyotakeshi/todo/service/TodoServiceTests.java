@@ -5,23 +5,26 @@ import com.kiyotakeshi.todo.repository.TodoRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @DataJpaTest
+@ComponentScan(basePackageClasses = TodoService.class)
 // @ActiveProfiles("test") // if you set application-test.yml
 class TodoServiceTests {
 
 	@Autowired
-	TodoRepository repository;
+	TodoService service;
 
 	@Test
 	void findAll() {
-		List<Todo> todoList = this.repository.findAll();
+		List<Todo> todoList = this.service.findAll();
 		System.out.println("Todo List");
 		todoList.stream().forEach(System.out::println);
 		assertThat(todoList).isNotEmpty();
@@ -29,50 +32,51 @@ class TodoServiceTests {
 
 	@Test
 	void findById() {
-		var todo = this.repository.findById(1000L).orElseThrow();
+		var todo = this.service.findById(1000L);
 		assertThat(todo.getActivityName()).isEqualTo("go to supermarket");
 	}
 
 	@Test
+	void findByIdExpectedException() {
+		assertThrows(ResponseStatusException.class, () -> this.service.findById(10000L));
+	}
+
+	@Test
 	void save() {
-		int before = this.repository.findAll().size();
+		int before = this.service.findAll().size();
 		var todo = new Todo("sleep", "rainbow", "free");
-		this.repository.save(todo);
-		int after = this.repository.findAll().size();
+		this.service.save(todo);
+		int after = this.service.findAll().size();
 		assertThat(before + 1).isEqualTo(after);
 	}
 
 	@Test
 	void findByCategory() {
-		List<Todo> todoByCategory = this.repository.findByCategory("hobby");
+		List<Todo> todoByCategory = this.service.findByCategory("hobby");
 		assertThat(todoByCategory).hasSize(1);
 		assertThat(todoByCategory.get(0).getCategory()).isEqualTo("hobby");
 	}
 
 	@Test
 	void updateTodo() {
-		var todo = this.repository.findById(1001L).orElseThrow();
-		todo.setActivityName("update");
-		todo.setColor("red");
-		todo.setCategory("free");
-		this.repository.save(todo);
-
-		var newTodo = this.repository.findById(1001L).orElseThrow();
-		assertThat(newTodo.getActivityName()).isEqualTo("update");
-		assertThat(newTodo.getColor()).isEqualTo("red");
-		assertThat(newTodo.getCategory()).isEqualTo("free");
+		var update = new Todo("update", "red", "free");
+		this.service.updateTodo(1001L, update);
+		var updatedTodo = this.service.findById(1001L);
+		assertThat(updatedTodo.getActivityName()).isEqualTo("update");
+		assertThat(updatedTodo.getColor()).isEqualTo("red");
+		assertThat(updatedTodo.getCategory()).isEqualTo("free");
 	}
 
 	@Test
 	void deleteTodo() {
-		int before = this.repository.findAll().size();
-		this.repository.deleteById(1001L);
-		int after = this.repository.findAll().size();
+		int before = this.service.findAll().size();
+		this.service.deleteTodo(1001L);
+		int after = this.service.findAll().size();
 		assertThat(after).isEqualTo(before - 1);
 
 		// 削除したため取得できないこと
-		assertThatExceptionOfType(NoSuchElementException.class).isThrownBy(() -> {
-			this.repository.findById(1001L).get();
+		assertThatExceptionOfType(ResponseStatusException.class).isThrownBy(() -> {
+			this.service.findById(1001L).getId();
 		});
 	}
 

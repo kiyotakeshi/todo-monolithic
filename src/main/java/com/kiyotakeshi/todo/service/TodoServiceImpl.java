@@ -2,10 +2,11 @@ package com.kiyotakeshi.todo.service;
 
 import com.kiyotakeshi.todo.entity.Todo;
 import com.kiyotakeshi.todo.repository.TodoRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TodoServiceImpl implements TodoService {
@@ -22,8 +23,8 @@ public class TodoServiceImpl implements TodoService {
 	}
 
 	@Override
-	public Optional<Todo> findById(Long id) {
-		return this.todoRepository.findById(id);
+	public Todo findById(Long id) {
+		return this.todoRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 	}
 
 	@Override
@@ -38,7 +39,7 @@ public class TodoServiceImpl implements TodoService {
 
 	@Override
 	public Todo updateTodo(Long id, Todo update) {
-		var todo = this.findById(id).orElseThrow();
+		var todo = this.findById(id);
 		todo.setActivityName(update.getActivityName());
 		todo.setColor(update.getColor());
 		todo.setCategory(update.getCategory());

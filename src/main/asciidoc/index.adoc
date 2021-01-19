@@ -32,6 +32,14 @@ include::{snippets}/getTodoList/http-response.adoc[]
 .response-fields
 include::{snippets}/getTodoList/response-fields.adoc[]
 
+=== Not Exist
+
+.curl
+include::{snippets}/notGetTodo/curl-request.adoc[]
+
+.http-response
+include::{snippets}/notGetTodo/http-response.adoc[]
+
 == POST
 
 .curl

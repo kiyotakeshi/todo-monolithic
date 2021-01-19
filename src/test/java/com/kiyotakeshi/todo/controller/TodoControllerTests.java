@@ -19,8 +19,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -77,6 +76,16 @@ class TodoControllerTests {
 								(fieldWithPath("color").description("color")), //
 								(fieldWithPath("category").description("category")) //
 						)));
+	}
+
+	@Test
+	void shouldReturnNotFoundException() throws Exception {
+
+		this.mockMvc.perform(get(BASE_PATH + "10000")
+				.accept(MediaType.APPLICATION_JSON))
+				.andDo(print())
+				.andExpect(status().isNotFound())
+				.andDo(document("notGetTodo"));
 	}
 
 	@Test

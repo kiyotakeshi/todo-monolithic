@@ -70,6 +70,7 @@ class TodoServiceTests {
 		int after = this.repository.findAll().size();
 		assertThat(after).isEqualTo(before - 1);
 
+		// 削除したため取得できないこと
 		assertThatExceptionOfType(NoSuchElementException.class).isThrownBy(() -> {
 			this.repository.findById(1001L).get();
 		});

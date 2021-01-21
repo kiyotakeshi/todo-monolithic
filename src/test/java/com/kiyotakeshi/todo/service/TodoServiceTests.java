@@ -5,7 +5,10 @@ import com.kiyotakeshi.todo.repository.TodoRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -14,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@DataJpaTest
+@SpringBootTest
 @ComponentScan(basePackageClasses = TodoService.class)
 // @ActiveProfiles("test") // if you set application-test.yml
 class TodoServiceTests {
@@ -58,6 +61,7 @@ class TodoServiceTests {
 	}
 
 	@Test
+	@DirtiesContext
 	void updateTodo() {
 		var update = new Todo("update", "red", "free");
 		this.service.updateTodo(1001L, update);
@@ -68,6 +72,7 @@ class TodoServiceTests {
 	}
 
 	@Test
+	@DirtiesContext
 	void deleteTodo() {
 		int before = this.service.findAll().size();
 		this.service.deleteTodo(1001L);

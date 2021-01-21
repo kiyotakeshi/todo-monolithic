@@ -39,6 +39,16 @@ class TodoControllerTests {
 	@Autowired
 	private RestDocumentationContextProvider restDocumentationContextProvider;
 
+	/**
+	 * Todo convert json object
+	 * @param todo
+	 * @return
+	 */
+	private String convertJson(Todo todo) {
+		var gson = new Gson();
+		return gson.toJson(todo);
+	}
+
 	@BeforeEach
 	void setUp() {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
@@ -92,11 +102,10 @@ class TodoControllerTests {
 
 	@Test
 	void shouldCreateTodo() throws Exception {
+
 		var todo = new Todo("test", "black", "test");
+		String json = convertJson(todo);
 
-
-		var gson = new Gson();
-		String json = gson.toJson(todo);
 		this.mockMvc.perform(post(BASE_PATH) //
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(json))
@@ -108,13 +117,17 @@ class TodoControllerTests {
 				.andDo(document("postTodo"));
 	}
 
+
 	@Test
 	@DirtiesContext // after this test is run, spring would automatically reset the date
 	void shouldUpdateTodo() throws Exception {
+
+		var updateTodo = new Todo("update", "red", "update");
+		String json = convertJson(updateTodo);
+
 		this.mockMvc.perform(put(BASE_PATH + "1000") //
-				.param("activityName", "update") //
-				.param("color", "red") //
-				.param("category", "update")) //
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(json))
 				.andExpect(status().isOk()) //
 				.andExpect(content()
 						.json("{\"id\":1000,\"activityName\":\"update\",\"color\":\"red\",\"category\":\"update\"}"))

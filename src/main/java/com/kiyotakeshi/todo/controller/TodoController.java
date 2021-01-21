@@ -44,7 +44,7 @@ public class TodoController {
 	@PutMapping(value = "/{id}")
 	// ref https://developer.mozilla.org/ja/docs/Web/HTTP/Methods/PUT
 	@ResponseStatus(HttpStatus.OK)
-	public Todo updateTodo(@PathVariable("id") Long id, Todo update) {
+	public Todo updateTodo(@PathVariable("id") Long id,@RequestBody Todo update) {
 		logger.info("update valed -> {}", update);
 		return this.todoService.updateTodo(id, update);
 	}

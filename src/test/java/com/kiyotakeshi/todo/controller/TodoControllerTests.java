@@ -1,5 +1,7 @@
 package com.kiyotakeshi.todo.controller;
 
+import com.google.gson.Gson;
+import com.kiyotakeshi.todo.entity.Todo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,10 +92,14 @@ class TodoControllerTests {
 
 	@Test
 	void shouldCreateTodo() throws Exception {
+		var todo = new Todo("test", "black", "test");
+
+
+		var gson = new Gson();
+		String json = gson.toJson(todo);
 		this.mockMvc.perform(post(BASE_PATH) //
-				.param("activityName", "test") //
-				.param("color", "black") //
-				.param("category", "test")) //
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(json))
 				.andExpect(status().isCreated()) //
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 				.andExpect(header().string("Location", BASE_PATH + 1003))

@@ -1,13 +1,17 @@
 package com.kiyotakeshi.todo.controller;
 
 import com.google.gson.Gson;
+import com.kiyotakeshi.todo.entity.Color;
+import com.kiyotakeshi.todo.entity.Progress;
 import com.kiyotakeshi.todo.entity.Todo;
+import com.kiyotakeshi.todo.service.TodoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.test.annotation.DirtiesContext;
@@ -15,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
@@ -38,6 +43,10 @@ class TodoControllerTests {
 
 	@Autowired
 	private RestDocumentationContextProvider restDocumentationContextProvider;
+
+	// TODO: mock object (@MockBean) に変える
+	@Autowired
+	private TodoService service;
 
 	/**
 	 * Todo convert json object
@@ -68,6 +77,7 @@ class TodoControllerTests {
 				.andDo(document("getTodoList", // target/generated-snippets/getTodoList
 						responseFields(fieldWithPath("[].id").description("uniqe todo id"), //
 								(fieldWithPath("[].activityName").description("activity name")), //
+								(fieldWithPath("[].progress").description("progress")), //
 								(fieldWithPath("[].color").description("color")), //
 								(fieldWithPath("[].category").description("category")) //
 						)));
@@ -80,11 +90,11 @@ class TodoControllerTests {
 				.accept(MediaType.APPLICATION_JSON)) //
 				.andDo(print()) //
 				.andExpect(status().isOk()) //
-				.andExpect(content().json(
-						"{\"id\":1000,\"activityName\":\"go to supermarket\",\"color\":\"white\",\"category\":\"housework\"}"))
+				.andExpect(content().json("{\"id\":1000,\"activityName\":\"go to supermarket\",\"progress\":\"TODO\",\"color\":\"White\",\"category\":\"housework\"}"))
 				.andDo(document("getTodo", //
 						responseFields(fieldWithPath("id").description("unique todo id"), //
 								(fieldWithPath("activityName").description("activity name")), //
+								(fieldWithPath("progress").description("progress")), //
 								(fieldWithPath("color").description("color")), //
 								(fieldWithPath("category").description("category")) //
 						)));
@@ -103,17 +113,20 @@ class TodoControllerTests {
 	@Test
 	void shouldCreateTodo() throws Exception {
 
-		var todo = new Todo("test", "black", "test");
+		var todo = new Todo("test", "test");
 		String json = convertJson(todo);
 
 		this.mockMvc.perform(post(BASE_PATH) //
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(json))
+				.andDo(print()) //
 				.andExpect(status().isCreated()) //
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 				.andExpect(header().string("Location", BASE_PATH + 1003))
 				.andExpect(content()
-						.json("{\"id\":1003,\"activityName\":\"test\",\"color\":\"black\",\"category\":\"test\"}"))
+						.json(
+						"{\"id\":1003,\"activityName\":\"test\",\"progress\":\"TODO\",\"color\":null,\"category\":\"test\"}"
+						))
 				.andDo(document("postTodo"));
 	}
 
@@ -122,15 +135,21 @@ class TodoControllerTests {
 	@DirtiesContext // after this test is run, spring would automatically reset the date
 	void shouldUpdateTodo() throws Exception {
 
-		var updateTodo = new Todo("update", "red", "update");
-		String json = convertJson(updateTodo);
+		Todo todo = this.service.findById(1001L);
+		todo.setActivityName("update");
+		todo.setProgress(Progress.Doing);
+		todo.setCategory("update");
+		String json = convertJson(todo);
 
-		this.mockMvc.perform(put(BASE_PATH + "1000") //
+		this.mockMvc.perform(put(BASE_PATH + "1001") //
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(json))
+				.andDo(print())
 				.andExpect(status().isOk()) //
 				.andExpect(content()
-						.json("{\"id\":1000,\"activityName\":\"update\",\"color\":\"red\",\"category\":\"update\"}"))
+						.json(
+"{\"id\":1001,\"activityName\":\"update\",\"progress\":\"Doing\",\"color\":\"White\",\"category\":\"update\"}"
+						))
 				.andDo(document("putTodo"));
 	}
 

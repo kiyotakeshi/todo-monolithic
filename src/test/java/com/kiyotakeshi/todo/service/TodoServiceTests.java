@@ -1,5 +1,7 @@
 package com.kiyotakeshi.todo.service;
 
+import com.kiyotakeshi.todo.entity.Color;
+import com.kiyotakeshi.todo.entity.Progress;
 import com.kiyotakeshi.todo.entity.Todo;
 import com.kiyotakeshi.todo.repository.TodoRepository;
 import org.junit.jupiter.api.Test;
@@ -47,7 +49,7 @@ class TodoServiceTests {
 	@Test
 	void save() {
 		int before = this.service.findAll().size();
-		var todo = new Todo("sleep", "rainbow", "free");
+		var todo = new Todo("sleep","free");
 		this.service.save(todo);
 		int after = this.service.findAll().size();
 		assertThat(before + 1).isEqualTo(after);
@@ -63,12 +65,16 @@ class TodoServiceTests {
 	@Test
 	@DirtiesContext
 	void updateTodo() {
-		var update = new Todo("update", "red", "free");
-		this.service.updateTodo(1001L, update);
+		var todo = this.service.findById(1001L);
+		todo.setActivityName("update");
+		todo.setProgress(Progress.Doing);
+		todo.setColor(Color.Red);
+
+		this.service.updateTodo(1001L, todo);
 		var updatedTodo = this.service.findById(1001L);
 		assertThat(updatedTodo.getActivityName()).isEqualTo("update");
-		assertThat(updatedTodo.getColor()).isEqualTo("red");
-		assertThat(updatedTodo.getCategory()).isEqualTo("free");
+		assertThat(updatedTodo.getProgress()).isEqualTo(Progress.Doing);
+		assertThat(updatedTodo.getColor()).isEqualTo(Color.Red);
 	}
 
 	@Test

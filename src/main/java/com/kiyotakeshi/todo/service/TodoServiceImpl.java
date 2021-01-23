@@ -42,6 +42,7 @@ public class TodoServiceImpl implements TodoService {
 		var todo = this.findById(id);
 		todo.setActivityName(update.getActivityName());
 		todo.setColor(update.getColor());
+		todo.setProgress(update.getProgress());
 		todo.setCategory(update.getCategory());
 		return this.todoRepository.save(todo);
 	}

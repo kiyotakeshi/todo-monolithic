@@ -1,9 +1,6 @@
 package com.kiyotakeshi.todo.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Todo {
@@ -18,18 +15,18 @@ public class Todo {
 
 	private String activityName;
 
-	// TODO:
-	// private boolean done;
+	@Enumerated(EnumType.STRING)
+	 private Progress progress;
 
-	// TODO:
-	// private enum color;
-	private String color;
+	@Enumerated(EnumType.STRING)
+	private Color color;
 
 	private String category;
 
-	public Todo(String activityName, String color, String category) {
+	public Todo(String activityName, String category) {
+		// Todo 生成時のステータスは TODO
+		this.progress = Progress.TODO;
 		this.activityName = activityName;
-		this.color = color;
 		this.category = category;
 	}
 
@@ -48,14 +45,6 @@ public class Todo {
 		this.activityName = activityName;
 	}
 
-	public String getColor() {
-		return color;
-	}
-
-	public void setColor(String color) {
-		this.color = color;
-	}
-
 	public String getCategory() {
 		return category;
 	}
@@ -64,10 +53,30 @@ public class Todo {
 		this.category = category;
 	}
 
-	@Override
-	public String toString() {
-		return "Todo{" + "id=" + id + ", activityName='" + activityName + '\'' + ", color='" + color + '\''
-				+ ", category='" + category + '\'' + '}';
+	public Progress getProgress() {
+		return progress;
 	}
 
+	public void setProgress(Progress progress) {
+		this.progress = progress;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
+	@Override
+	public String toString() {
+		return "Todo{" +
+				"id=" + id +
+				", activityName='" + activityName + '\'' +
+				", progress=" + progress +
+				", colors=" + color +
+				", category='" + category + '\'' +
+				'}';
+	}
 }

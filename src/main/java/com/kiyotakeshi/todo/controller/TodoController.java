@@ -6,10 +6,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.StringJoiner;
 
 @RestController
 @RequestMapping(value = "/todo")
@@ -21,6 +26,17 @@ public class TodoController {
 
 	public TodoController(TodoService todoService) {
 		this.todoService = todoService;
+	}
+
+	private String getErrors(BindingResult result) {
+		var joiner = new StringJoiner(", ");
+		List<ObjectError> allErrors = result.getAllErrors();
+
+		for (var error : allErrors) {
+			String defaultMessage = error.getDefaultMessage();
+			joiner.add(defaultMessage);
+		}
+		return joiner.toString();
 	}
 
 	@GetMapping
@@ -36,7 +52,11 @@ public class TodoController {
 	@PostMapping
 	// ref https://developer.mozilla.org/ja/docs/Web/HTTP/Status/201
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<Todo> createTodo(@RequestBody Todo todo) {
+	public ResponseEntity<Todo> createTodo(@RequestBody @Valid Todo todo, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+					String.format("Request contains incorrect data = [%s]", getErrors(bindingResult)));
+		}
 		var savedTodo = this.todoService.save(todo);
 		return ResponseEntity.created(URI.create("/todo/" + savedTodo.getId())).body(savedTodo);
 	}
@@ -44,7 +64,11 @@ public class TodoController {
 	@PutMapping(value = "/{id}")
 	// ref https://developer.mozilla.org/ja/docs/Web/HTTP/Methods/PUT
 	@ResponseStatus(HttpStatus.OK)
-	public Todo updateTodo(@PathVariable("id") Long id,@RequestBody Todo update) {
+	public Todo updateTodo(@PathVariable("id") Long id, @RequestBody @Valid Todo update, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+					String.format("Request contains incorrect data = [%s]", bindingResult.getAllErrors()));
+		}
 		logger.info("update valed -> {}", update);
 		return this.todoService.updateTodo(id, update);
 	}

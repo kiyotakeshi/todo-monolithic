@@ -1,6 +1,7 @@
 package com.kiyotakeshi.todo.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Todo {
@@ -13,10 +14,12 @@ public class Todo {
 	// allocationSize = 1)
 	private Long id;
 
+	@NotNull
 	private String activityName;
 
 	@Enumerated(EnumType.STRING)
-	 private Progress progress;
+	@NotNull
+	private Progress progress;
 
 	@Enumerated(EnumType.STRING)
 	private Color color;

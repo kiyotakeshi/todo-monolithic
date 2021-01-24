@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/todo")
@@ -29,14 +30,9 @@ public class TodoController {
 	}
 
 	private String getErrors(BindingResult result) {
-		var joiner = new StringJoiner(", ");
-		List<ObjectError> allErrors = result.getAllErrors();
-
-		for (var error : allErrors) {
-			String defaultMessage = error.getDefaultMessage();
-			joiner.add(defaultMessage);
-		}
-		return joiner.toString();
+		return result.getAllErrors().stream()
+				.map(ObjectError::getDefaultMessage)
+				.collect(Collectors.joining(", "));
 	}
 
 	@GetMapping

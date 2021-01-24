@@ -3,12 +3,9 @@ package com.kiyotakeshi.todo.service;
 import com.kiyotakeshi.todo.entity.Color;
 import com.kiyotakeshi.todo.entity.Progress;
 import com.kiyotakeshi.todo.entity.Todo;
-import com.kiyotakeshi.todo.repository.TodoRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.web.server.ResponseStatusException;
@@ -49,7 +46,7 @@ class TodoServiceTests {
 	@Test
 	void save() {
 		int before = this.service.findAll().size();
-		var todo = new Todo("sleep","free");
+		var todo = new Todo("sleep", Progress.TODO, Color.Blue, "test");
 		this.service.save(todo);
 		int after = this.service.findAll().size();
 		assertThat(before + 1).isEqualTo(after);

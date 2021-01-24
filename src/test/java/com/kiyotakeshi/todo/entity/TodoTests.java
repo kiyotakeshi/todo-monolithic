@@ -23,7 +23,7 @@ class TodoTests {
 
 	@Test
 	void newTodo() {
-		var todo = new Todo("new","test");
+		var todo = new Todo("new", Progress.TODO, Color.Blue, "test");
 		this.em.persistAndFlush(todo);
 	}
 

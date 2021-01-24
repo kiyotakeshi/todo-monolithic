@@ -23,10 +23,10 @@ public class Todo {
 
 	private String category;
 
-	public Todo(String activityName, String category) {
-		// Todo 生成時のステータスは TODO
-		this.progress = Progress.TODO;
+	public Todo(String activityName, Progress progress, Color color, String category) {
 		this.activityName = activityName;
+		this.progress = progress;
+		this.color = color;
 		this.category = category;
 	}
 
@@ -71,12 +71,8 @@ public class Todo {
 
 	@Override
 	public String toString() {
-		return "Todo{" +
-				"id=" + id +
-				", activityName='" + activityName + '\'' +
-				", progress=" + progress +
-				", colors=" + color +
-				", category='" + category + '\'' +
-				'}';
+		return "Todo{" + "id=" + id + ", activityName='" + activityName + '\'' + ", progress=" + progress + ", colors="
+				+ color + ", category='" + category + '\'' + '}';
 	}
+
 }

@@ -4,15 +4,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class IndexController {
+public class ApiReferenceController {
 
 	/**
 	 * return API reference
 	 * @return index.html
 	 */
-	@RequestMapping({ "", "/", "index", "index.html" })
+	@RequestMapping("/api")
 	public String index() {
-		return "index";
+		return "api-reference";
 	}
 
 }

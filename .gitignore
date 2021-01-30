@@ -33,5 +33,5 @@ build/
 .vscode/
 
 ### custom ###
-/src/main/resources/templates/index.html
+/src/main/resources/templates/api-reference.html
 .docker/postgres/**

@@ -1,4 +1,4 @@
-package com.kiyotakeshi.todo.controller;
+package com.kiyotakeshi.todo.api;
 
 import com.google.gson.Gson;
 import com.kiyotakeshi.todo.entity.Progress;
@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureRestDocs(outputDir = "target/generated-snippets")
 class TodoControllerTests {
 
-	private final String BASE_PATH = "/todo/";
+	private final String BASE_PATH = "/api/todo/";
 
 	@Autowired
 	private MockMvc mockMvc;

@@ -18,14 +18,16 @@ import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/todo")
-public class TodoController {
+@RequestMapping(value = "/api/todo")
+public class TodoApiController {
+
+	private static final String BASE_PATH = "/api/todo/";
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	final TodoService todoService;
 
-	public TodoController(TodoService todoService) {
+	public TodoApiController(TodoService todoService) {
 		this.todoService = todoService;
 	}
 
@@ -54,7 +56,7 @@ public class TodoController {
 					String.format("Request contains incorrect data = [%s]", getErrors(bindingResult)));
 		}
 		var savedTodo = this.todoService.save(todo);
-		return ResponseEntity.created(URI.create("/todo/" + savedTodo.getId())).body(savedTodo);
+		return ResponseEntity.created(URI.create(BASE_PATH + savedTodo.getId())).body(savedTodo);
 	}
 
 	@PutMapping(value = "/{id}")

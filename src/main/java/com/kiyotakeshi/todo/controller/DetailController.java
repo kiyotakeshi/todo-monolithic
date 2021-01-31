@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "/detail")
 public class DetailController {
 
-    @GetMapping
-    public String getIndex(Model model){
-        return "detail";
-    }
+	@GetMapping
+	public String getIndex(Model model) {
+		return "detail";
+	}
+
 }

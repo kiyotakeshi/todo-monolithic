@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(value = "register")
 public class RegisterController {
 
-    @GetMapping
-    public String getIndex(Model model){
-        return "register";
-    }
+	@GetMapping
+	public String getIndex(Model model) {
+		return "register";
+	}
+
 }

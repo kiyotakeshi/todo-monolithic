@@ -32,9 +32,7 @@ public class TodoApiController {
 	}
 
 	private String getErrors(BindingResult result) {
-		return result.getAllErrors().stream()
-				.map(ObjectError::getDefaultMessage)
-				.collect(Collectors.joining(", "));
+		return result.getAllErrors().stream().map(ObjectError::getDefaultMessage).collect(Collectors.joining(", "));
 	}
 
 	@GetMapping

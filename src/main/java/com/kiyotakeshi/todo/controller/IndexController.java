@@ -6,11 +6,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(value = {"", "/index", "/index.html"})
+@RequestMapping(value = { "", "/index", "/index.html" })
 public class IndexController {
 
-    @GetMapping
-    public String getIndex(Model model){
-        return "index";
-    }
+	@GetMapping
+	public String getIndex(Model model) {
+		return "index";
+	}
+
 }

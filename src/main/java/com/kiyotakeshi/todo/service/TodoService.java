@@ -18,4 +18,5 @@ public interface TodoService {
 	void deleteTodo(Long id);
 
 	List<Todo> findByCategory(Category category);
+
 }

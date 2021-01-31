@@ -48,6 +48,14 @@ include::{snippets}/postTodo/curl-request.adoc[]
 .response
 include::{snippets}/postTodo/http-response.adoc[]
 
+=== if you post NOT Open progress new Todo, return Open progress Todo
+
+.curl
+include::{snippets}/postTodoProgressDone/curl-request.adoc[]
+
+.response
+include::{snippets}/postTodoProgressDone/http-response.adoc[]
+
 == PUT
 
 .curl

@@ -1,6 +1,6 @@
 package com.kiyotakeshi.todo.service;
 
-import com.kiyotakeshi.todo.entity.Color;
+import com.kiyotakeshi.todo.entity.Category;
 import com.kiyotakeshi.todo.entity.Progress;
 import com.kiyotakeshi.todo.entity.Todo;
 import org.junit.jupiter.api.Test;
@@ -46,7 +46,7 @@ class TodoServiceTests {
 	@Test
 	void save() {
 		int before = this.service.findAll().size();
-		var todo = new Todo("sleep", Progress.TODO, Color.Blue, "test");
+		var todo = new Todo("sleep", Progress.Open, Category.None, "test");
 		this.service.save(todo);
 		int after = this.service.findAll().size();
 		assertThat(before + 1).isEqualTo(after);
@@ -54,9 +54,9 @@ class TodoServiceTests {
 
 	@Test
 	void findByCategory() {
-		List<Todo> todoByCategory = this.service.findByCategory("hobby");
+		List<Todo> todoByCategory = this.service.findByCategory(Category.Hobby);
 		assertThat(todoByCategory).hasSize(1);
-		assertThat(todoByCategory.get(0).getCategory()).isEqualTo("hobby");
+		assertThat(todoByCategory.get(0).getCategory()).isEqualTo(Category.Hobby);
 	}
 
 	@Test
@@ -65,13 +65,13 @@ class TodoServiceTests {
 		var todo = this.service.findById(1001L);
 		todo.setActivityName("update");
 		todo.setProgress(Progress.Doing);
-		todo.setColor(Color.Red);
+		todo.setCategory(Category.Other);
 
 		this.service.updateTodo(1001L, todo);
 		var updatedTodo = this.service.findById(1001L);
 		assertThat(updatedTodo.getActivityName()).isEqualTo("update");
 		assertThat(updatedTodo.getProgress()).isEqualTo(Progress.Doing);
-		assertThat(updatedTodo.getColor()).isEqualTo(Color.Red);
+		assertThat(updatedTodo.getCategory()).isEqualTo(Category.Other);
 	}
 
 	@Test

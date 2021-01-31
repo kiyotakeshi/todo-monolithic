@@ -1,5 +1,6 @@
 package com.kiyotakeshi.todo.service;
 
+import com.kiyotakeshi.todo.entity.Category;
 import com.kiyotakeshi.todo.entity.Todo;
 import com.kiyotakeshi.todo.repository.TodoRepository;
 import org.springframework.http.HttpStatus;
@@ -33,8 +34,8 @@ public class TodoServiceImpl implements TodoService {
 	}
 
 	@Override
-	public List<Todo> findByCategory(String hobby) {
-		return this.todoRepository.findByCategory(hobby);
+	public List<Todo> findByCategory(Category category) {
+		return this.todoRepository.findByCategory(category);
 	}
 
 	@Override
@@ -42,7 +43,7 @@ public class TodoServiceImpl implements TodoService {
 		var todo = this.findById(id);
 		todo.setActivityName(update.getActivityName());
 		todo.setProgress(update.getProgress());
-		todo.setColor(update.getColor());
+		todo.setCategory(update.getCategory());
 		todo.setCategory(update.getCategory());
 		return this.todoRepository.save(todo);
 	}

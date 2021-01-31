@@ -22,15 +22,15 @@ public class Todo {
 	private Progress progress;
 
 	@Enumerated(EnumType.STRING)
-	private Color color;
+	private Category category;
 
-	private String category;
+	private String label;
 
-	public Todo(String activityName, Progress progress, Color color, String category) {
+	public Todo(@NotNull String activityName, @NotNull Progress progress, Category category, String label) {
 		this.activityName = activityName;
 		this.progress = progress;
-		this.color = color;
 		this.category = category;
+		this.label = label;
 	}
 
 	protected Todo() {
@@ -48,14 +48,6 @@ public class Todo {
 		this.activityName = activityName;
 	}
 
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
 	public Progress getProgress() {
 		return progress;
 	}
@@ -64,18 +56,26 @@ public class Todo {
 		this.progress = progress;
 	}
 
-	public Color getColor() {
-		return color;
+	public Category getCategory() {
+		return category;
 	}
 
-	public void setColor(Color color) {
-		this.color = color;
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
 	@Override
 	public String toString() {
 		return "Todo{" + "id=" + id + ", activityName='" + activityName + '\'' + ", progress=" + progress + ", colors="
-				+ color + ", category='" + category + '\'' + '}';
+				+ category + ", category='" + category + '\'' + '}';
 	}
 
 }

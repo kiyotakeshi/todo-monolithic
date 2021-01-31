@@ -1,5 +1,6 @@
 package com.kiyotakeshi.todo.controller;
 
+import com.kiyotakeshi.todo.entity.Progress;
 import com.kiyotakeshi.todo.entity.Todo;
 import com.kiyotakeshi.todo.service.TodoService;
 import org.slf4j.Logger;
@@ -14,7 +15,6 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
-import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 @RestController
@@ -55,6 +55,8 @@ public class TodoApiController {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
 					String.format("Request contains incorrect data = [%s]", getErrors(bindingResult)));
 		}
+		// first created todo status is always Open
+		todo.setProgress(Progress.Open);
 		var savedTodo = this.todoService.save(todo);
 		return ResponseEntity.created(URI.create(BASE_PATH + savedTodo.getId())).body(savedTodo);
 	}

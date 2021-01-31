@@ -17,13 +17,13 @@ class TodoTests {
 	void mapping() {
 		var todo1 = this.em.find(Todo.class, 1000L);
 		assertThat(todo1.getActivityName()).isEqualTo("go to supermarket");
-		assertThat(todo1.getCategory()).isEqualTo("housework");
-		assertThat(todo1.getColor()).isEqualTo(Color.White);
+		assertThat(todo1.getCategory()).isEqualTo(Category.Housework);
+		assertThat(todo1.getLabel()).isEqualTo("my-label");
 	}
 
 	@Test
 	void newTodo() {
-		var todo = new Todo("new", Progress.TODO, Color.Blue, "test");
+		var todo = new Todo("new", Progress.Open, Category.Hobby, "test");
 		this.em.persistAndFlush(todo);
 	}
 
@@ -32,13 +32,13 @@ class TodoTests {
 		var todo1 = this.em.find(Todo.class, 1000L);
 		todo1.setActivityName("go to bank");
 		todo1.setProgress(Progress.Doing);
-		todo1.setColor(Color.Blue);
+		todo1.setCategory(Category.Hobby);
 		this.em.persistAndFlush(todo1);
 
 		var updatedTodo1 = this.em.find(Todo.class, 1000L);
 		assertThat(updatedTodo1.getActivityName()).isEqualTo("go to bank");
 		assertThat(updatedTodo1.getProgress()).isEqualTo(Progress.Doing);
-		assertThat(updatedTodo1.getColor()).isEqualTo(Color.Blue);
+		assertThat(updatedTodo1.getCategory()).isEqualTo(Category.Hobby);
 	}
 
 }

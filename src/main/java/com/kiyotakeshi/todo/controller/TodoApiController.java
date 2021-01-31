@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/todo")
+@CrossOrigin(origins = {"http://localhost:8081"})
 public class TodoApiController {
 
 	private static final String BASE_PATH = "/api/todo/";

@@ -22,6 +22,12 @@ java -version
 docker-compose up -d
 ```
 
+- build(generate api reference)
+
+```shell
+./mvnw clean package
+```
+
 - run application as a spring-boot
 
 ```shell
@@ -31,8 +37,6 @@ docker-compose up -d
 - run application as a jar using maven
 
 ```shell
-./mvnw clean package
-
 ARTIFACT_VERSION=$(./mvnw org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout)
 
 java -jar target/todo-$ARTIFACT_VERSION.jar

@@ -35,3 +35,4 @@ build/
 ### custom ###
 /src/main/resources/templates/api-reference.html
 .docker/postgres/**
+src/main/resources/static/js/sample.js

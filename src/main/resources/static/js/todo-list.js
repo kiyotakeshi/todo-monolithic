@@ -1,25 +1,18 @@
-// var requestOptions = {
-//     method: 'GET'
-// };
-
-// fetch("http://127.0.0.1:8081/api/todo", requestOptions)
-//     .then(function(res) {
-//         console.log("status=" + res.status);
-//         console.log(res.json());
-// })
-
-var requestOptions = {
-    method: 'GET'
-};
-
-fetch("http://127.0.0.1:8081/api/todo", requestOptions)
-    .then(function(res) {
-        console.log("status = " + res.status)
-        return res.json();
+fetch('http://localhost:8081/api/todo')
+    .then(res => {
+        if(res.ok){
+            return res.json();
+        }
+        throw new Error("fetch failure...");
     })
-    .then(data => {
-        console.log(data);
+    .then(json => {
+        const todoUl = document.getElementById('todoUl');
+        json.forEach(todo => {
+            const li = document.createElement('li');
+            li.innerText = todo.activityName;
+            todoUl.append(li);
+        })
     })
     .catch(error => {
-        console.log("fetch failure...");
+        console.log("loop process error");
     })

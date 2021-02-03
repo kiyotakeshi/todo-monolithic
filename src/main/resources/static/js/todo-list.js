@@ -1,15 +1,18 @@
-fetch('http://localhost:8081/api/todo')
+const todoUl = document.getElementById('todoUl');
+fetch(document.URL + '/api/todo')
     .then(res => {
         if(res.ok){
             return res.json();
         }
         throw new Error("fetch failure...");
     })
-    .then(json => {
-        const todoUl = document.getElementById('todoUl');
-        json.forEach(todo => {
+    .then(todoList => {
+        todoList.forEach(todo => {
             const li = document.createElement('li');
-            li.innerText = `id: ${todo.id} activityName: ${todo.activityName}`;
+            const a = document.createElement('a');
+            a.href = document.URL + '/api/todo/' + todo.id;
+            a.innerText = `${todo.id}: ${todo.activityName}`;
+            li.append(a);
             todoUl.append(li);
         })
     })

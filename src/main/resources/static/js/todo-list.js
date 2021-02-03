@@ -9,7 +9,9 @@ fetch('http://localhost:8081/api/todo')
         const todoUl = document.getElementById('todoUl');
         json.forEach(todo => {
             const li = document.createElement('li');
-            li.innerText = todo.activityName;
+            li.innerText = "id: "  + todo.id + " activityName: " + todo.activityName;
+            // li.innerText = "id: " + todo.id;
+            // li.innerText += " activityName: " + todo.activityName;
             todoUl.append(li);
         })
     })

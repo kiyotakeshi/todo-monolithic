@@ -2,7 +2,8 @@ const url = new URL(location.href);
 const id = url.searchParams.get('id');
 const deleteButton = document.getElementById('delete');
 const h1 = document.getElementById('h1');
-const todoUl = document.getElementById('todo');
+// const todoUl = document.getElementById('todo');
+const todoTable = document.getElementById('todo');
 
 fetch(url.origin + '/api/todo/' + id)
     .then(res => {
@@ -13,10 +14,17 @@ fetch(url.origin + '/api/todo/' + id)
     })
     .then(todo => {
         Object.keys(todo).forEach(key => {
-            const li = document.createElement('li');
-            const todoValue = todo[key];
-            li.append(key + ":" + todoValue);
-            todoUl.append(li);
+            // const li = document.createElement('li');
+            // li.append(key + ":" + todoValue);
+            // todoUl.append(li);
+            const tr = document.createElement('tr');
+            const th = document.createElement('th');
+            const td = document.createElement('td');
+            th.append(key);
+            td.append(todo[key]);
+            todoTable.append(tr);
+            todoTable.append(th);
+            todoTable.append(td);
         })
     })
     .catch(error => {

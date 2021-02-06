@@ -5,29 +5,25 @@
     <title>Detail</title>
 </head>
 <body>
-<h1>Detail</h1>
-<table id="todo">
-    <tr>
+<h1 id="h1">Detail</h1>
+<table>
+    <tr id="todoId">
         <th>id</th>
-        <td id="todoId"></td>
     </tr>
-    <tr>
+    <tr id="todoActivityName">
         <th>activityName</th>
-        <td id="todoActivityName"></td>
     </tr>
-    <tr>
+    <tr id="todoCategory">
         <th>category</th>
-        <td id="todoCategory"></td>
     </tr>
-    <tr>
+    <tr id="todoLabel">
         <th>label</th>
-        <td id="todoLabel"></td>
     </tr>
-    <tr>
+    <tr id="todoProgress">
         <th>progress</th>
-        <td id="todoProgress"></td>
     </tr>
 </table>
+<button id="delete">削除</button>
 <script type="text/javascript" th:src="@{/js/todo.js}"></script>
 </body>
 </html>

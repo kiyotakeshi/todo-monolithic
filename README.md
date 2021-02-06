@@ -2,7 +2,7 @@
 
 ## [API Reference](src/main/asciidoc/api-reference.adoc)
 
-- this is .adoc ,so run application and access [http://localhost:8081](http://localhost:8081)
+- this is .adoc ,so run application and access [http://localhost:8081/api](http://localhost:8081/api)
 
 ## [Domain Model](./docs/domain-model.puml)
 
@@ -41,6 +41,8 @@ ARTIFACT_VERSION=$(./mvnw org.apache.maven.plugins:maven-help-plugin:3.2.0:evalu
 
 java -jar target/todo-$ARTIFACT_VERSION.jar
 ```
+
+### Access [localhost:8081](http://localhost:8081/)
 
 ## Build Docker image
 

@@ -21,8 +21,9 @@ package Sample <<Cloud>> {
 
 class Todo << (A,#f6d53d) AggregateRoot >> {
     activityName: String
-    color: String
-    category: String
+    progress: Enum
+    category: Enum
+    label: String
 '    lines: List<SampleContents>
 }
 

@@ -2,8 +2,7 @@ const url = new URL(location.href);
 const id = url.searchParams.get('id');
 const deleteButton = document.getElementById('delete');
 const h1 = document.getElementById('h1');
-// const todoUl = document.getElementById('todo');
-const todoTable = document.getElementById('todo');
+const todoUl = document.getElementById('todo');
 
 fetch(url.origin + '/api/todo/' + id)
     .then(res => {
@@ -14,26 +13,15 @@ fetch(url.origin + '/api/todo/' + id)
     })
     .then(todo => {
         Object.keys(todo).forEach(key => {
-            // const li = document.createElement('li');
-            // li.append(key + ":" + todoValue);
-            // todoUl.append(li);
-            const tr = document.createElement('tr');
-            const th = document.createElement('th');
-            const td = document.createElement('td');
-            th.append(key);
-            td.append(todo[key]);
-            todoTable.append(tr);
-            todoTable.append(th);
-            todoTable.append(td);
+            const li = document.createElement('li');
+            li.append(key + ":" + todo[key]);
+            console.log(li);
+            todoUl.append(li);
         })
     })
     .catch(error => {
         console.log("error");
-        todoId.remove();
-        todoActivityName.remove();
-        todoCategory.remove();
-        todoLabel.remove();
-        todoProgress.remove();
+        todoUl.remove();
         deleteButton.remove();
         h1.innerHTML = "指定したIDの Todo は存在していません";
     })
@@ -62,4 +50,7 @@ const todoDelete = () => {
     .catch(error => console.log('delete failure', error));
 };
 
+// TODO: 確認を出すようにする
 deleteButton.addEventListener('click', () => todoDelete());
+
+// TODO: 削除後、 /index.html に redirect

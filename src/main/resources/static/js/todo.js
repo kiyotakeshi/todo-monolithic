@@ -12,10 +12,10 @@ fetch(url.origin + '/api/todo/' + id)
         throw new Error("fetch failure...");
     })
     .then(todo => {
-        Object.keys(todo).forEach(key => {
+        // @see https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Object/entries#iterating_through_an_object
+        Object.entries(todo).forEach(([key, value]) => {
             const li = document.createElement('li');
-            li.append(key + ":" + todo[key]);
-            console.log(li);
+            li.append(`${key}: ${value}`);
             todoUl.append(li);
         })
     })
@@ -35,22 +35,17 @@ const todoDelete = () => {
     .then(res => {
         if(res.status = 204) {
             console.log("削除できました");
-            todoId.remove();
-            todoActivityName.remove();
-            todoCategory.remove();
-            todoLabel.remove();
-            todoProgress.remove();
+            todoUl.remove();
             deleteButton.remove();
             h1.remove();
+            // TODO: 削除後、 /index.html に redirect
+        } else {
+            throw new Error("delete failure");
         }
-        // Todo なぜかここに入ってくる
-        throw new Error("error");
     })
-    // .then(result => alert(res.ok ? '成功' : '失敗');
     .catch(error => console.log('delete failure', error));
 };
 
 // TODO: 確認を出すようにする
 deleteButton.addEventListener('click', () => todoDelete());
 
-// TODO: 削除後、 /index.html に redirect

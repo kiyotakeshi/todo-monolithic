@@ -6,5 +6,29 @@
 </head>
 <body>
 <h1>Register</h1>
+<ul>
+    <form class="form" id="register">
+        <li>
+            <label for="activityName">activity name</label>
+            <input type="text" name="activityName" required>
+        </li>
+        <li>
+            <label for="category">category</label>
+            <select name="category">
+                <option value="None">None</option>
+                <option value="Job">Job</option>
+                <option value="Housework">Housework</option>
+                <option value="Hobby">Hobby</option>
+                <option value="Other">Other</option>
+            </select>
+        </li>
+        <li>
+            <label for="label">label</label>
+            <input type="text" name="label">
+        </li>
+        <input type="submit" value="作成">
+    </form>
+</ul>
+<script type="text/javascript" th:src="@{/js/todo-post.js}"></script>
 </body>
 </html>

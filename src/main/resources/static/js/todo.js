@@ -34,11 +34,8 @@ const todoDelete = () => {
     fetch("http://localhost:8081/api/todo/" + id, requestOptions)
     .then(res => {
         if(res.status = 204) {
-            console.log("削除できました");
-            todoUl.remove();
-            deleteButton.remove();
-            h1.remove();
-            // TODO: 削除後、 /index.html に redirect
+            // redirect to index.html
+            location.href = url.origin
         } else {
             throw new Error("delete failure");
         }

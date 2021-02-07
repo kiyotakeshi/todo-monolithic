@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(value = "register")
+@RequestMapping(value = {"/register", "/register.html"})
 public class RegisterController {
 
 	@GetMapping

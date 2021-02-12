@@ -1,5 +1,7 @@
+const origin = new URL(location.href).origin;
 const todoUl = document.getElementById('todoUl');
-fetch(document.URL + '/api/todo')
+
+fetch(origin + '/api/todo')
     .then(res => {
         if(res.ok){
             return res.json();
@@ -10,7 +12,7 @@ fetch(document.URL + '/api/todo')
         todoList.forEach(todo => {
             const li = document.createElement('li');
             const a = document.createElement('a');
-            a.href = window.location.href + "detail?id=" + todo.id
+            a.href = origin + "/detail?id=" + todo.id
             a.innerText = `${todo.id}: ${todo.activityName}`;
             li.append(a);
             todoUl.append(li);

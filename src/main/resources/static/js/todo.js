@@ -34,7 +34,7 @@ const todoDelete = () => {
     fetch("http://localhost:8081/api/todo/" + id, requestOptions)
     .then(res => {
         if(res.status = 204) {
-            // redirect to index.html
+            // redirect to document root
             location.href = url.origin
         } else {
             throw new Error("delete failure");

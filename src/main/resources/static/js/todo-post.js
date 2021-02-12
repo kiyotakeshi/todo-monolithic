@@ -1,3 +1,4 @@
+const url = new URL(location.href);
 const form = document.getElementById('register');
 
 const postTodo = () => {
@@ -27,6 +28,10 @@ const postTodo = () => {
     .then(result => {
         console.log(result);
         console.log("submit!!!");
+        // TODO: 作成しましたポップアップ
+
+        // redirect to document root
+        location.href = url.origin
     })
     .catch(error => console.log('error', error));
 };

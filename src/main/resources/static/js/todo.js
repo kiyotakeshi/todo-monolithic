@@ -16,7 +16,6 @@ function createInputDom(value){
     const input = document.createElement('input');
     input.setAttribute('type', 'text');
     input.setAttribute('name', value);
-    input.required = true;
     return input;
 }
 
@@ -72,6 +71,7 @@ fetch(url.origin + '/api/todo/' + id)
                 const label = createLabelDom(key);
 
                 const input = createInputDom(key);
+                input.required = true;
                 input.value = todoValue;
 
                 li.appendChild(label);

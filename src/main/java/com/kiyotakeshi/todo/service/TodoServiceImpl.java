@@ -44,7 +44,7 @@ public class TodoServiceImpl implements TodoService {
 		todo.setActivityName(update.getActivityName());
 		todo.setProgress(update.getProgress());
 		todo.setCategory(update.getCategory());
-		todo.setCategory(update.getCategory());
+		todo.setLabel(update.getLabel());
 		return this.todoRepository.save(todo);
 	}
 

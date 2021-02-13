@@ -175,12 +175,13 @@ class TodoControllerTests {
 		todo.setActivityName("update");
 		todo.setProgress(Progress.Doing);
 		todo.setCategory(Category.Job);
+		todo.setLabel("update label");
 		String json = convertJson(todo);
 
 		this.mockMvc.perform(put(BASE_PATH + "1001") //
 				.contentType(MediaType.APPLICATION_JSON).content(json)).andDo(print()).andExpect(status().isOk()) //
 				.andExpect(content().json(
-						"{\"id\":1001,\"activityName\":\"update\",\"progress\":\"Doing\",\"category\":\"Job\",\"label\":null}"))
+						"{\"id\":1001,\"activityName\":\"update\",\"progress\":\"Doing\",\"category\":\"Job\",\"label\":\"update label\"}"))
 				.andDo(document("putTodo"));
 	}
 

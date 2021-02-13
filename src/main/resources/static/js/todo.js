@@ -5,6 +5,10 @@ const updateButton = document.getElementById('update');
 const h1 = document.getElementById('h1');
 const todoUl = document.getElementById('todo');
 
+const updateForm = document.createElement('form')
+updateForm.setAttribute('class','form')
+updateForm.setAttribute('id', 'update');
+
 function createLabelDom(value){
     const label = document.createElement('label');
     label.setAttribute('for', value);
@@ -122,7 +126,8 @@ fetch(url.origin + '/api/todo/' + id)
                 li.appendChild(label);
                 li.appendChild(input);                
             }
-            todoUl.append(li);
+            updateForm.append(li);
+            todoUl.append(updateForm);
         })
     })
     .catch(error => {
@@ -152,24 +157,41 @@ const todoDelete = () => {
 
 // TODO:
 const todoUpdate = () => {
-    // var requestOptions = {
-    //     method: 'PUT'
-    // };
-    
-    // fetch("http://localhost:8081/api/todo/" + id, requestOptions)
-    // .then(res => {
-    //     if(res.status = 204) {
-    //         // redirect to document root
-    //         location.href = url.origin
-    //     } else {
-    //         throw new Error("delete failure");
-    //     }
-    // })
-    // .catch(error => console.log('delete failure', error));
+
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const formData = new FormData(updateForm);
+    formData.append("id", id);
+    const plainFormData = Object.fromEntries(formData.entries());
+
+    // sample data
+    // JSON.stringify({"id":10034,"activityName":"update","progress":"Doing","category":"Housework","label":"update label"});
+    const data = JSON.stringify(plainFormData);
+
+    var requestOptions = {
+    method: 'PUT',
+    headers: myHeaders,
+    body: data,
+    redirect: 'follow'
+    };
+
+    fetch("http://localhost:8081/api/todo/" + id, requestOptions)
+    .then(res => {
+        if(res.status = 200){
+            // TODO: 更新しましたポップアップ
+            // redirect to document root
+            location.href = url.origin
+        } else {
+            throw new Error("update failure");
+        }
+    })
+    .catch(error => console.log('update failure', error));  
+    console.log("update start");
 };
 
 // TODO: 確認を出すようにする
 deleteButton.addEventListener('click', () => todoDelete());
 
 // TODO:
-// updateButton.addEventListener('click', () => todoUpdate());
+updateButton.addEventListener('click', () => todoUpdate());

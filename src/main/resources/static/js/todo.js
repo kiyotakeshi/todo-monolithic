@@ -1,6 +1,7 @@
 const url = new URL(location.href);
 const id = url.searchParams.get('id');
 const deleteButton = document.getElementById('delete');
+const updateButton = document.getElementById('update');
 const h1 = document.getElementById('h1');
 const todoUl = document.getElementById('todo');
 
@@ -128,14 +129,15 @@ fetch(url.origin + '/api/todo/' + id)
         console.log("error");
         todoUl.remove();
         deleteButton.remove();
+        updateButton.remove();
         h1.innerHTML = "指定したIDの Todo は存在していません";
     })
-
-var requestOptions = {
-    method: 'DELETE'
-    };
     
 const todoDelete = () => {
+    var requestOptions = {
+        method: 'DELETE'
+    };
+    
     fetch("http://localhost:8081/api/todo/" + id, requestOptions)
     .then(res => {
         if(res.status = 204) {
@@ -148,6 +150,26 @@ const todoDelete = () => {
     .catch(error => console.log('delete failure', error));
 };
 
+// TODO:
+const todoUpdate = () => {
+    // var requestOptions = {
+    //     method: 'PUT'
+    // };
+    
+    // fetch("http://localhost:8081/api/todo/" + id, requestOptions)
+    // .then(res => {
+    //     if(res.status = 204) {
+    //         // redirect to document root
+    //         location.href = url.origin
+    //     } else {
+    //         throw new Error("delete failure");
+    //     }
+    // })
+    // .catch(error => console.log('delete failure', error));
+};
+
 // TODO: 確認を出すようにする
 deleteButton.addEventListener('click', () => todoDelete());
 
+// TODO:
+// updateButton.addEventListener('click', () => todoUpdate());

@@ -4,6 +4,27 @@ const deleteButton = document.getElementById('delete');
 const h1 = document.getElementById('h1');
 const todoUl = document.getElementById('todo');
 
+function createLabelDom(value){
+    const label = document.createElement('label');
+    label.setAttribute('for', value);
+    label.innerText = value;
+    return label;
+};
+
+function createInputDom(value){
+    const input = document.createElement('input');
+    input.setAttribute('type', 'text');
+    input.setAttribute('name', value);
+    input.required = true;
+    return input;
+}
+
+function createSelectDom(value){
+    const select = document.createElement('select');
+    select.setAttribute('name', value);
+    return select;
+}
+
 fetch(url.origin + '/api/todo/' + id)
     .then(res => {
         if(res.ok){
@@ -14,8 +35,92 @@ fetch(url.origin + '/api/todo/' + id)
     .then(todo => {
         // @see https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Object/entries#iterating_through_an_object
         Object.entries(todo).forEach(([key, value]) => {
+
+            // 使用する際にイメージしやすい変数に代入(value を変更するとエラーになったため)
+            const todoValue = value;
+
             const li = document.createElement('li');
-            li.append(`${key}: ${value}`);
+
+            function setPrimaryOptionToSelect(select, primaryValue){
+                const option = document.createElement('option');
+                option.setAttribute('value', primaryValue);
+                option.innerText = primaryValue;
+                select.appendChild(option);
+                return select;
+            }
+
+            // fetch してきた Todo の持つ value(todoValue) と異なる Enum を option の選択肢として追加
+            function setOtherOptionToSelect(select, OptionEnum){
+                OptionEnum.filter(function(element){
+                    if(element !== todoValue){
+                        const option = document.createElement('option');
+                        option.setAttribute('value', element);
+                        option.innerText = element;
+                        select.appendChild(option);
+                    }
+                })
+                return select;
+            }
+
+            // id は表示するだけ(編集不可)
+            if(key === "id"){
+                li.append(`${key}: ${todoValue}`);
+            }
+
+            if(key === "activityName"){
+                const label = createLabelDom(key);
+
+                const input = createInputDom(key);
+                input.value = todoValue;
+
+                li.appendChild(label);
+                li.appendChild(input);
+            }
+
+            if(key === "progress"){
+                const label = createLabelDom(key);
+
+                let select = createSelectDom(key);
+
+                // fetch してきた Todo の progress (todoValue) を選択済みとして表示
+                select = setPrimaryOptionToSelect(select, todoValue);
+
+                // 他の progress を option として追加
+                // @see API reference (localhost:8081/api/)
+                const progressEnum = ['Open','Doing','Done']
+                select = setOtherOptionToSelect(select, progressEnum);
+
+                label.appendChild(select);
+                li.appendChild(label);
+            }
+
+            if(key === "category"){
+                const label = createLabelDom(key);
+
+                // この if のスコープ内なので、 mutable に扱う
+                let select = createSelectDom(key);
+
+                // fetch してきた Todo の category (todoValue) を選択済みとして表示
+                select = setPrimaryOptionToSelect(select, todoValue);
+
+                // 他の progress を option として追加
+                // @see API reference (localhost:8081/api/)
+                const categoryEnum = ['Job','Housework','Hobby', 'Other','None']
+                select = setOtherOptionToSelect(select, categoryEnum);
+
+                label.appendChild(select);
+                li.appendChild(label);
+            }
+
+            if(key === "label"){
+                const label = createLabelDom(key);
+
+                const input = createInputDom(key);
+                input.value = value;
+
+                li.appendChild(label);
+                li.appendChild(input);                
+            }
             todoUl.append(li);
         })
     })

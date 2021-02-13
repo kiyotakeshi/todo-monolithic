@@ -7,7 +7,6 @@ const todoUl = document.getElementById('todo');
 
 const updateForm = document.createElement('form')
 updateForm.setAttribute('class','form')
-updateForm.setAttribute('id', 'update');
 
 function createLabelDom(value){
     const label = document.createElement('label');
@@ -54,8 +53,8 @@ fetch(url.origin + '/api/todo/' + id)
             }
 
             // fetch してきた Todo の持つ value(todoValue) と異なる Enum を option の選択肢として追加
-            function setOtherOptionToSelect(select, OptionEnum){
-                OptionEnum.filter(function(element){
+            function setOtherOptionToSelect(select, optionEnum){
+                optionEnum.filter(function(element){
                     if(element !== todoValue){
                         const option = document.createElement('option');
                         option.setAttribute('value', element);
@@ -155,7 +154,6 @@ const todoDelete = () => {
     .catch(error => console.log('delete failure', error));
 };
 
-// TODO:
 const todoUpdate = () => {
 
     var myHeaders = new Headers();
@@ -193,5 +191,4 @@ const todoUpdate = () => {
 // TODO: 確認を出すようにする
 deleteButton.addEventListener('click', () => todoDelete());
 
-// TODO:
 updateButton.addEventListener('click', () => todoUpdate());

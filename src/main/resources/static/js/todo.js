@@ -37,9 +37,7 @@ fetch(url.origin + '/api/todo/' + id)
     })
     .then((todo) => {
         // @see https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Object/entries#iterating_through_an_object
-        Object.entries(todo).forEach(([key, value]) => {
-            // 使用する際にイメージしやすい変数に代入(value を変更するとエラーになったため)
-            const todoValue = value;
+        Object.entries(todo).forEach(([key, todoValue]) => {
 
             const li = document.createElement('li');
 
@@ -125,7 +123,7 @@ fetch(url.origin + '/api/todo/' + id)
                 const label = createLabelDom(key);
 
                 const input = createInputDom(key);
-                input.value = value;
+                input.value = todoValue;
 
                 li.appendChild(label);
                 li.appendChild(input);

@@ -3,10 +3,10 @@ const todoUl = document.getElementById('todoUl');
 
 fetch(origin + '/api/todo')
     .then((res) => {
-        if (res.ok) {
-            return res.json();
+        if (!res.ok) {
+            throw new Error('fetch failure...');
         }
-        throw new Error('fetch failure...');
+        return res.json();
     })
     .then((todoList) => {
         todoList.forEach((todo) => {

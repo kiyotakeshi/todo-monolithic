@@ -26,8 +26,6 @@ const postTodo = () => {
     fetch(window.location.origin + '/api/todo/', requestOptions)
         .then((response) => response.text())
         .then((result) => {
-            console.log(result);
-            console.log('submit!!!');
             // TODO: 作成しましたポップアップ
 
             // redirect to document root

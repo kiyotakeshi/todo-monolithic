@@ -30,15 +30,14 @@ function createSelectDom(value) {
 
 fetch(url.origin + '/api/todo/' + id)
     .then((res) => {
-        if (res.ok) {
-            return res.json();
+        if (!res.ok) {
+            throw new Error('fetch failure...');
         }
-        throw new Error('fetch failure...');
+        return res.json();
     })
     .then((todo) => {
         // @see https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Object/entries#iterating_through_an_object
         Object.entries(todo).forEach(([key, todoValue]) => {
-
             const li = document.createElement('li');
 
             function setPrimaryOptionToSelect(select, primaryValue) {
@@ -147,12 +146,11 @@ const todoDelete = () => {
 
     fetch('http://localhost:8081/api/todo/' + id, requestOptions)
         .then((res) => {
-            if ((res.status = 204)) {
-                // redirect to document root
-                location.href = url.origin;
-            } else {
+            if (!res.status === 204) {
                 throw new Error('delete failure');
-            }
+            } 
+            // redirect to document root
+            location.href = url.origin;
         })
         .catch((error) => console.log('delete failure', error));
 };
@@ -178,16 +176,14 @@ const todoUpdate = () => {
 
     fetch('http://localhost:8081/api/todo/' + id, requestOptions)
         .then((res) => {
-            if ((res.status = 200)) {
-                // TODO: 更新しましたポップアップ
-                // redirect to document root
-                location.href = url.origin;
-            } else {
+            if (!res.status === 200) {
                 throw new Error('update failure');
-            }
+            } 
+            // TODO: 更新しましたポップアップ
+            // redirect to document root
+            location.href = url.origin;
         })
         .catch((error) => console.log('update failure', error));
-    console.log('update start');
 };
 
 // TODO: 確認を出すようにする

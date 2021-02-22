@@ -13,10 +13,10 @@ const postTodo = () => {
     const data = JSON.stringify(plainFormData);
     console.log(data);
 
-    var myHeaders = new Headers();
+    const myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
 
-    var requestOptions = {
+    const requestOptions = {
         method: 'POST',
         headers: myHeaders,
         body: data,

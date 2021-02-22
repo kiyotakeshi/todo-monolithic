@@ -143,7 +143,7 @@ fetch(url.origin + '/api/todo/' + id)
     });
 
 const todoDelete = () => {
-    var requestOptions = {
+    const requestOptions = {
         method: 'DELETE',
     };
 
@@ -160,7 +160,7 @@ const todoDelete = () => {
 };
 
 const todoUpdate = () => {
-    var myHeaders = new Headers();
+    const myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
 
     const formData = new FormData(updateForm);
@@ -171,7 +171,7 @@ const todoUpdate = () => {
     // JSON.stringify({"id":10034,"activityName":"update","progress":"Doing","category":"Housework","label":"update label"});
     const data = JSON.stringify(plainFormData);
 
-    var requestOptions = {
+    const requestOptions = {
         method: 'PUT',
         headers: myHeaders,
         body: data,

@@ -5,46 +5,45 @@ const updateButton = document.getElementById('update');
 const h1 = document.getElementById('h1');
 const todoUl = document.getElementById('todo');
 
-const updateForm = document.createElement('form')
-updateForm.setAttribute('class','form')
+const updateForm = document.createElement('form');
+updateForm.setAttribute('class', 'form');
 
-function createLabelDom(value){
+function createLabelDom(value) {
     const label = document.createElement('label');
     label.setAttribute('for', value);
     label.innerText = value;
     return label;
-};
+}
 
-function createInputDom(value){
+function createInputDom(value) {
     const input = document.createElement('input');
     input.setAttribute('type', 'text');
     input.setAttribute('name', value);
     return input;
 }
 
-function createSelectDom(value){
+function createSelectDom(value) {
     const select = document.createElement('select');
     select.setAttribute('name', value);
     return select;
 }
 
 fetch(url.origin + '/api/todo/' + id)
-    .then(res => {
-        if(res.ok){
+    .then((res) => {
+        if (res.ok) {
             return res.json();
         }
-        throw new Error("fetch failure...");
+        throw new Error('fetch failure...');
     })
-    .then(todo => {
+    .then((todo) => {
         // @see https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Object/entries#iterating_through_an_object
         Object.entries(todo).forEach(([key, value]) => {
-
             // 使用する際にイメージしやすい変数に代入(value を変更するとエラーになったため)
             const todoValue = value;
 
             const li = document.createElement('li');
 
-            function setPrimaryOptionToSelect(select, primaryValue){
+            function setPrimaryOptionToSelect(select, primaryValue) {
                 const option = document.createElement('option');
                 option.setAttribute('value', primaryValue);
                 option.innerText = primaryValue;
@@ -53,24 +52,24 @@ fetch(url.origin + '/api/todo/' + id)
             }
 
             // fetch してきた Todo の持つ value(todoValue) と異なる Enum を option の選択肢として追加
-            function setOtherOptionToSelect(select, optionEnum){
-                optionEnum.filter(function(element){
-                    if(element !== todoValue){
+            function setOtherOptionToSelect(select, optionEnum) {
+                optionEnum.filter(function (element) {
+                    if (element !== todoValue) {
                         const option = document.createElement('option');
                         option.setAttribute('value', element);
                         option.innerText = element;
                         select.appendChild(option);
                     }
-                })
+                });
                 return select;
             }
 
             // id は表示するだけ(編集不可)
-            if(key === "id"){
+            if (key === 'id') {
                 li.append(`${key}: ${todoValue}`);
             }
 
-            if(key === "activityName"){
+            if (key === 'activityName') {
                 const label = createLabelDom(key);
 
                 const input = createInputDom(key);
@@ -81,7 +80,7 @@ fetch(url.origin + '/api/todo/' + id)
                 li.appendChild(input);
             }
 
-            if(key === "progress"){
+            if (key === 'progress') {
                 const label = createLabelDom(key);
 
                 let select = createSelectDom(key);
@@ -91,14 +90,14 @@ fetch(url.origin + '/api/todo/' + id)
 
                 // 他の progress を option として追加
                 // @see API reference (localhost:8081/api/)
-                const progressEnum = ['Open','Doing','Done']
+                const progressEnum = ['Open', 'Doing', 'Done'];
                 select = setOtherOptionToSelect(select, progressEnum);
 
                 label.appendChild(select);
                 li.appendChild(label);
             }
 
-            if(key === "category"){
+            if (key === 'category') {
                 const label = createLabelDom(key);
 
                 // この if のスコープ内なので、 mutable に扱う
@@ -109,58 +108,63 @@ fetch(url.origin + '/api/todo/' + id)
 
                 // 他の progress を option として追加
                 // @see API reference (localhost:8081/api/)
-                const categoryEnum = ['Job','Housework','Hobby', 'Other','None']
+                const categoryEnum = [
+                    'Job',
+                    'Housework',
+                    'Hobby',
+                    'Other',
+                    'None',
+                ];
                 select = setOtherOptionToSelect(select, categoryEnum);
 
                 label.appendChild(select);
                 li.appendChild(label);
             }
 
-            if(key === "label"){
+            if (key === 'label') {
                 const label = createLabelDom(key);
 
                 const input = createInputDom(key);
                 input.value = value;
 
                 li.appendChild(label);
-                li.appendChild(input);                
+                li.appendChild(input);
             }
             updateForm.append(li);
             todoUl.append(updateForm);
-        })
+        });
     })
-    .catch(error => {
-        console.log("error");
+    .catch((error) => {
+        console.log('error');
         todoUl.remove();
         deleteButton.remove();
         updateButton.remove();
-        h1.innerHTML = "指定したIDの Todo は存在していません";
-    })
-    
+        h1.innerHTML = '指定したIDの Todo は存在していません';
+    });
+
 const todoDelete = () => {
     var requestOptions = {
-        method: 'DELETE'
+        method: 'DELETE',
     };
-    
-    fetch("http://localhost:8081/api/todo/" + id, requestOptions)
-    .then(res => {
-        if(res.status = 204) {
-            // redirect to document root
-            location.href = url.origin
-        } else {
-            throw new Error("delete failure");
-        }
-    })
-    .catch(error => console.log('delete failure', error));
+
+    fetch('http://localhost:8081/api/todo/' + id, requestOptions)
+        .then((res) => {
+            if ((res.status = 204)) {
+                // redirect to document root
+                location.href = url.origin;
+            } else {
+                throw new Error('delete failure');
+            }
+        })
+        .catch((error) => console.log('delete failure', error));
 };
 
 const todoUpdate = () => {
-
     var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append('Content-Type', 'application/json');
 
     const formData = new FormData(updateForm);
-    formData.append("id", id);
+    formData.append('id', id);
     const plainFormData = Object.fromEntries(formData.entries());
 
     // sample data
@@ -168,24 +172,24 @@ const todoUpdate = () => {
     const data = JSON.stringify(plainFormData);
 
     var requestOptions = {
-    method: 'PUT',
-    headers: myHeaders,
-    body: data,
-    redirect: 'follow'
+        method: 'PUT',
+        headers: myHeaders,
+        body: data,
+        redirect: 'follow',
     };
 
-    fetch("http://localhost:8081/api/todo/" + id, requestOptions)
-    .then(res => {
-        if(res.status = 200){
-            // TODO: 更新しましたポップアップ
-            // redirect to document root
-            location.href = url.origin
-        } else {
-            throw new Error("update failure");
-        }
-    })
-    .catch(error => console.log('update failure', error));  
-    console.log("update start");
+    fetch('http://localhost:8081/api/todo/' + id, requestOptions)
+        .then((res) => {
+            if ((res.status = 200)) {
+                // TODO: 更新しましたポップアップ
+                // redirect to document root
+                location.href = url.origin;
+            } else {
+                throw new Error('update failure');
+            }
+        })
+        .catch((error) => console.log('update failure', error));
+    console.log('update start');
 };
 
 // TODO: 確認を出すようにする

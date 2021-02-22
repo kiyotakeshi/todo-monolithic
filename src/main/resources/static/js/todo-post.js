@@ -3,7 +3,7 @@ const form = document.getElementById('register');
 
 const postTodo = () => {
     const formData = new FormData(form);
-    formData.append("progress", "Doing");
+    formData.append('progress', 'Doing');
     // @see https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries
     const plainFormData = Object.fromEntries(formData.entries());
     console.log(plainFormData);
@@ -14,29 +14,29 @@ const postTodo = () => {
     console.log(data);
 
     var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    
+    myHeaders.append('Content-Type', 'application/json');
+
     var requestOptions = {
         method: 'POST',
         headers: myHeaders,
         body: data,
-        redirect: 'follow'
-    };        
+        redirect: 'follow',
+    };
 
-    fetch(window.location.origin + "/api/todo/", requestOptions)
-    .then(response => response.text())
-    .then(result => {
-        console.log(result);
-        console.log("submit!!!");
-        // TODO: 作成しましたポップアップ
+    fetch(window.location.origin + '/api/todo/', requestOptions)
+        .then((response) => response.text())
+        .then((result) => {
+            console.log(result);
+            console.log('submit!!!');
+            // TODO: 作成しましたポップアップ
 
-        // redirect to document root
-        location.href = url.origin
-    })
-    .catch(error => console.log('error', error));
+            // redirect to document root
+            location.href = url.origin;
+        })
+        .catch((error) => console.log('error', error));
 };
 
-form.addEventListener("submit", function(event){
+form.addEventListener('submit', function (event) {
     event.preventDefault();
     postTodo();
-});        
+});

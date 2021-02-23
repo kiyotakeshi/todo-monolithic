@@ -6,7 +6,7 @@ const h1 = document.getElementById('h1');
 const todoUl = document.getElementById('todo');
 
 const updateForm = document.createElement('form');
-updateForm.setAttribute('class', 'form');
+updateForm.classList.add('form');
 
 function createLabelDom(value) {
     const label = document.createElement('label');
@@ -16,13 +16,13 @@ function createLabelDom(value) {
 
 function createInputDom(value) {
     const input = document.createElement('input');
-    input.setAttribute('name', value);
+    input.name = value
     return input;
 }
 
 function createSelectDom(value) {
     const select = document.createElement('select');
-    select.setAttribute('name', value);
+    select.name = value;
     return select;
 }
 
@@ -40,7 +40,7 @@ fetch(apiEndpoint + id)
 
             function setPrimaryOptionToSelect(select, primaryValue) {
                 const option = document.createElement('option');
-                option.setAttribute('value', primaryValue);
+                option.value = primaryValue;
                 option.innerText = primaryValue;
                 select.appendChild(option);
                 return select;
@@ -51,7 +51,7 @@ fetch(apiEndpoint + id)
                 optionEnum.filter(function (element) {
                     if (element !== todoValue) {
                         const option = document.createElement('option');
-                        option.setAttribute('value', element);
+                        option.value = element;
                         option.innerText = element;
                         select.appendChild(option);
                     }

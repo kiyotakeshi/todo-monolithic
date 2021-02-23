@@ -186,7 +186,13 @@ const todoUpdate = () => {
         .catch((error) => console.log('update failure', error));
 };
 
-// TODO: 確認を出すようにする
-deleteButton.addEventListener('click', () => todoDelete());
+deleteButton.addEventListener('click', () => {
+    const result = confirm('delete?');
+    if (result){
+        todoDelete();
+    } else {
+        console.log('削除しませんでした');
+    }
+});
 
 updateButton.addEventListener('click', () => todoUpdate());

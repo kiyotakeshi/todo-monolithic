@@ -61,72 +61,77 @@ fetch(url.origin + '/api/todo/' + id)
                 return select;
             }
 
-            // id は表示するだけ(編集不可)
-            if (key === 'id') {
-                li.append(`${key}: ${todoValue}`);
+            switch (key) {
+                case 'id':
+                    // id は表示するだけ(編集不可)
+                    li.append(`${key}: ${todoValue}`);
+                    break;
+                case 'activityName':
+                    const label1 = createLabelDom(key);
+
+                    const input1 = createInputDom(key);
+                    input1.required = true;
+                    input1.value = todoValue;
+
+                    li.appendChild(label1);
+                    li.appendChild(input1);
+                    break;
+
+                case 'progress':
+                    const label2 = createLabelDom(key);
+
+                    let select1 = createSelectDom(key);
+
+                    // fetch してきた Todo の progress (todoValue) を選択済みとして表示
+                    select1 = setPrimaryOptionToSelect(select1, todoValue);
+
+                    // 他の progress を option として追加
+                    // @see API reference (localhost:8081/api/)
+                    const progressEnum = ['Open', 'Doing', 'Done'];
+                    select1 = setOtherOptionToSelect(select1, progressEnum);
+
+                    label2.appendChild(select1);
+                    li.appendChild(label2);
+                    break;
+
+                case 'category':
+                    const label3 = createLabelDom(key);
+
+                    // この スコープ内なので、 mutable に扱う
+                    let select2 = createSelectDom(key);
+
+                    // fetch してきた Todo の category (todoValue) を選択済みとして表示
+                    select2 = setPrimaryOptionToSelect(select2, todoValue);
+
+                    // 他の progress を option として追加
+                    // @see API reference (localhost:8081/api/)
+                    const categoryEnum = [
+                        'Job',
+                        'Housework',
+                        'Hobby',
+                        'Other',
+                        'None',
+                    ];
+                    select = setOtherOptionToSelect(select2, categoryEnum);
+
+                    label3.appendChild(select2);
+                    li.appendChild(label3);
+                    break;
+
+                case 'label':
+                    const label4 = createLabelDom(key);
+
+                    const input2 = createInputDom(key);
+                    input2.value = todoValue;
+
+                    li.appendChild(label4);
+                    li.appendChild(input2);
+
+                    break;
+                default:
+                    console.log(`${key} is Invalid key`);
             }
 
-            if (key === 'activityName') {
-                const label = createLabelDom(key);
-
-                const input = createInputDom(key);
-                input.required = true;
-                input.value = todoValue;
-
-                li.appendChild(label);
-                li.appendChild(input);
-            }
-
-            if (key === 'progress') {
-                const label = createLabelDom(key);
-
-                let select = createSelectDom(key);
-
-                // fetch してきた Todo の progress (todoValue) を選択済みとして表示
-                select = setPrimaryOptionToSelect(select, todoValue);
-
-                // 他の progress を option として追加
-                // @see API reference (localhost:8081/api/)
-                const progressEnum = ['Open', 'Doing', 'Done'];
-                select = setOtherOptionToSelect(select, progressEnum);
-
-                label.appendChild(select);
-                li.appendChild(label);
-            }
-
-            if (key === 'category') {
-                const label = createLabelDom(key);
-
-                // この if のスコープ内なので、 mutable に扱う
-                let select = createSelectDom(key);
-
-                // fetch してきた Todo の category (todoValue) を選択済みとして表示
-                select = setPrimaryOptionToSelect(select, todoValue);
-
-                // 他の progress を option として追加
-                // @see API reference (localhost:8081/api/)
-                const categoryEnum = [
-                    'Job',
-                    'Housework',
-                    'Hobby',
-                    'Other',
-                    'None',
-                ];
-                select = setOtherOptionToSelect(select, categoryEnum);
-
-                label.appendChild(select);
-                li.appendChild(label);
-            }
-
-            if (key === 'label') {
-                const label = createLabelDom(key);
-
-                const input = createInputDom(key);
-                input.value = todoValue;
-
-                li.appendChild(label);
-                li.appendChild(input);
-            }
             updateForm.append(li);
             todoUl.append(updateForm);
         });
@@ -148,7 +153,7 @@ const todoDelete = () => {
         .then((res) => {
             if (!res.status === 204) {
                 throw new Error('delete failure');
-            } 
+            }
             // redirect to document root
             location.href = url.origin;
         })
@@ -178,7 +183,7 @@ const todoUpdate = () => {
         .then((res) => {
             if (!res.status === 200) {
                 throw new Error('update failure');
-            } 
+            }
             // TODO: 更新しましたポップアップ
             // redirect to document root
             location.href = url.origin;
@@ -188,7 +193,7 @@ const todoUpdate = () => {
 
 deleteButton.addEventListener('click', () => {
     const result = confirm('delete?');
-    if (result){
+    if (result) {
         todoDelete();
     } else {
         console.log('削除しませんでした');

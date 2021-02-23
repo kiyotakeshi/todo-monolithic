@@ -16,7 +16,7 @@ function createLabelDom(value) {
 
 function createInputDom(value) {
     const input = document.createElement('input');
-    input.name = value
+    input.name = value;
     return input;
 }
 
@@ -64,6 +64,7 @@ fetch(apiEndpoint + id)
                     // id は表示するだけ(編集不可)
                     li.append(`${key}: ${todoValue}`);
                     break;
+
                 case 'activityName':
                     const label1 = createLabelDom(key);
 
@@ -77,18 +78,29 @@ fetch(apiEndpoint + id)
 
                 case 'progress':
                     const label2 = createLabelDom(key);
+                    label2.innerText = key;
 
-                    let select1 = createSelectDom(key);
-
-                    // fetch してきた Todo の progress (todoValue) を選択済みとして表示
-                    select1 = setPrimaryOptionToSelect(select1, todoValue);
-
-                    // 他の progress を option として追加
+                    // progress の選択肢
                     // @see API reference (localhost:8081/api/)
                     const progressEnum = ['Open', 'Doing', 'Done'];
-                    select1 = setOtherOptionToSelect(select1, progressEnum);
 
-                    label2.appendChild(select1);
+                    // fetch してきた Todo の progress (todoValue) をラジオボタンの選択済みとして表示
+                    progressEnum.forEach((progress) => {
+                        const input = document.createElement('input');
+                        input.id = progress;
+                        input.name = key;
+                        input.type = 'radio';
+                        if (progress === todoValue) {
+                            input.checked = true;
+                        }
+                        input.value = progress;
+                        const label = document.createElement('label');
+                        label.htmlFor = input.id;
+                        label.innerText = progress;
+                        label2.appendChild(input);
+                        label2.appendChild(label);
+                    });
+
                     li.appendChild(label2);
                     break;
 
@@ -101,7 +113,7 @@ fetch(apiEndpoint + id)
                     // fetch してきた Todo の category (todoValue) を選択済みとして表示
                     select2 = setPrimaryOptionToSelect(select2, todoValue);
 
-                    // 他の progress を option として追加
+                    // 他の category を option として追加
                     // @see API reference (localhost:8081/api/)
                     const categoryEnum = [
                         'Job',

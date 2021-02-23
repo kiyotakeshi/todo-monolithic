@@ -1,6 +1,7 @@
+const apiEndpoint = location.origin + '/api/todo/';
 const todoUl = document.getElementById('todoUl');
 
-fetch(location.origin + '/api/todo')
+fetch(apiEndpoint)
     .then((res) => {
         if (!res.ok) {
             throw new Error('fetch failure...');

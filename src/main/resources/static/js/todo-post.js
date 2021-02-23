@@ -1,3 +1,4 @@
+const apiEndpoint = location.origin + '/api/todo/';
 const form = document.getElementById('register');
 
 const postTodo = () => {
@@ -22,7 +23,7 @@ const postTodo = () => {
         redirect: 'follow',
     };
 
-    fetch(window.location.origin + '/api/todo/', requestOptions)
+    fetch(apiEndpoint, requestOptions)
         .then((response) => response.text())
         .then((result) => {
             // TODO: 作成しましたポップアップ

@@ -1,3 +1,4 @@
+const apiEndpoint = location.origin + '/api/todo/';
 const id = new URL(location.href).searchParams.get('id');
 const deleteButton = document.getElementById('delete');
 const updateButton = document.getElementById('update');
@@ -27,7 +28,7 @@ function createSelectDom(value) {
     return select;
 }
 
-fetch(location.origin + '/api/todo/' + id)
+fetch(apiEndpoint + id)
     .then((res) => {
         if (!res.ok) {
             throw new Error('fetch failure...');
@@ -148,7 +149,7 @@ const todoDelete = () => {
         method: 'DELETE',
     };
 
-    fetch('http://localhost:8081/api/todo/' + id, requestOptions)
+    fetch(apiEndpoint + id, requestOptions)
         .then((res) => {
             if (!res.status === 204) {
                 throw new Error('delete failure');
@@ -178,7 +179,7 @@ const todoUpdate = () => {
         redirect: 'follow',
     };
 
-    fetch('http://localhost:8081/api/todo/' + id, requestOptions)
+    fetch(apiEndpoint + id, requestOptions)
         .then((res) => {
             if (!res.status === 200) {
                 throw new Error('update failure');

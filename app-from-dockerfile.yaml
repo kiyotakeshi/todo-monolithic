@@ -14,6 +14,8 @@ services:
     restart: always
   todo:
     image: todo:$ARTIFACT_VERSION
+    command: todo-$ARTIFACT_VERSION.jar
+    build: .
     container_name: todo
     ports:
       - 8081:8081

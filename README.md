@@ -57,19 +57,37 @@ java -jar target/todo-$ARTIFACT_VERSION.jar
 ```shell
 ./mvnw clean package
 
-ARTIFACT_VERSION=$(./mvnw org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout)
+export ARTIFACT_VERSION=$(./mvnw org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout)
 
 pack build todo:$ARTIFACT_VERSION -p target/todo-$ARTIFACT_VERSION.jar --builder cloudfoundry/cnb:bionic
 ```
 
-- run as a docker container
+## Run Docker container
+
+- run as a docker container ***from spring or Cloud Native Buildpacks image***
 
 ```shell
 docker image ls | grep todo
 
-export TODO_ARTIFACT_VERSION=$(./mvnw org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout)
+export ARTIFACT_VERSION=$(./mvnw org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout)
 
 docker-compose -f app.yaml up -d
 
 docker-compose -f app.yaml ps
+
+docker-compose -f app.yaml down
+```
+
+- run as a docker container ***from Dockerfile image***
+
+```shell
+export ARTIFACT_VERSION=$(./mvnw org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout)
+
+docker-compose -f app-from-dockerfile.yaml build
+
+docker-compose -f app-from-dockerfile.yaml up -d
+
+docker-compose -f app-from-dockerfile.yaml ps
+
+docker-compose -f app-from-dockerfile.yaml down
 ```

@@ -1,5 +1,4 @@
-const url = new URL(location.href);
-const id = url.searchParams.get('id');
+const id = new URL(location.href).searchParams.get('id');
 const deleteButton = document.getElementById('delete');
 const updateButton = document.getElementById('update');
 const h1 = document.getElementById('h1');
@@ -28,7 +27,7 @@ function createSelectDom(value) {
     return select;
 }
 
-fetch(url.origin + '/api/todo/' + id)
+fetch(location.origin + '/api/todo/' + id)
     .then((res) => {
         if (!res.ok) {
             throw new Error('fetch failure...');
@@ -155,7 +154,7 @@ const todoDelete = () => {
                 throw new Error('delete failure');
             }
             // redirect to document root
-            location.href = url.origin;
+            location.href = location.origin;
         })
         .catch((error) => console.log('delete failure', error));
 };
@@ -186,7 +185,7 @@ const todoUpdate = () => {
             }
             // TODO: 更新しましたポップアップ
             // redirect to document root
-            location.href = url.origin;
+            location.href = location.origin;
         })
         .catch((error) => console.log('update failure', error));
 };

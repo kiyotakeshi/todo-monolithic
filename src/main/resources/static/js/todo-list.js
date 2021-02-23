@@ -1,7 +1,6 @@
-const origin = new URL(location.href).origin;
 const todoUl = document.getElementById('todoUl');
 
-fetch(origin + '/api/todo')
+fetch(location.origin + '/api/todo')
     .then((res) => {
         if (!res.ok) {
             throw new Error('fetch failure...');
@@ -12,7 +11,7 @@ fetch(origin + '/api/todo')
         todoList.forEach((todo) => {
             const li = document.createElement('li');
             const a = document.createElement('a');
-            a.href = origin + '/detail?id=' + todo.id;
+            a.href = location.origin + '/detail?id=' + todo.id;
             a.innerText = `${todo.id}: ${todo.activityName}`;
             li.append(a);
             todoUl.append(li);

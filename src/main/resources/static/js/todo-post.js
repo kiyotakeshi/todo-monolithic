@@ -1,4 +1,3 @@
-const url = new URL(location.href);
 const form = document.getElementById('register');
 
 const postTodo = () => {
@@ -29,7 +28,7 @@ const postTodo = () => {
             // TODO: 作成しましたポップアップ
 
             // redirect to document root
-            location.href = url.origin;
+            location.href = location.origin;
         })
         .catch((error) => console.log('error', error));
 };

@@ -16,7 +16,6 @@ function createLabelDom(value) {
 
 function createInputDom(value) {
     const input = document.createElement('input');
-    input.setAttribute('type', 'text');
     input.setAttribute('name', value);
     return input;
 }

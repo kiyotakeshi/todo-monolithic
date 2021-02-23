@@ -10,7 +10,6 @@ updateForm.setAttribute('class', 'form');
 
 function createLabelDom(value) {
     const label = document.createElement('label');
-    label.setAttribute('for', value);
     label.innerText = value;
     return label;
 }

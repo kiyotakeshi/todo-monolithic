@@ -1,4 +1,10 @@
 <!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+<link th:href="@{/css/index.css}" rel="styleSheet">
+<!-- if appy css directory(not use thymeleaf) -->
+<!-- <link rel="stylesheet" type="text/css" href="../static/css/index.css"> -->
+
 <html lang="en">
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -13,6 +19,10 @@
     </ul>
 <script type="text/javascript" th:src="@{/js/todo-api.js}"></script>
 <script type="text/javascript" th:src="@{/js/todo-list.js}"></script>
-<a href="/register.html">新規作成</a><br>
+<div class="new-item">
+    <a href="/register.html" class="button">
+        <i class="fas fa-plus new-item"></i>
+    </a>
+</div>
 </body>
 </html>

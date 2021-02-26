@@ -71,6 +71,7 @@ fetch(apiEndpoint + id)
                     const input1 = createInputDom(key);
                     input1.required = true;
                     input1.value = todoValue;
+                    input1.classList.add('activity-name');
 
                     li.appendChild(label1);
                     li.appendChild(input1);

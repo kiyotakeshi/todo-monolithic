@@ -8,6 +8,10 @@ input {
     margin-left: 10px;
 }
 
+.activity-name {
+    width: 200px;
+}
+
 select {
     margin-left: 10px;
 }

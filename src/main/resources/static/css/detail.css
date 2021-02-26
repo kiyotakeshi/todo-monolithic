@@ -1,0 +1,25 @@
+ul li{
+    /* list-style: none; */
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+input {
+    margin-left: 10px;
+}
+
+select {
+    margin-left: 10px;
+}
+
+.back {
+    margin: 10px;
+}
+
+.delete {
+    margin: 10px;
+}
+
+.update {
+    margin: 10px;
+}

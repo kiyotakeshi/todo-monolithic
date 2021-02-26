@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+<link th:href="@{/css/register.css}" rel="styleSheet">
+<!-- if appy css directory(not use thymeleaf) -->
+<!-- <link rel="stylesheet" type="text/css" href="../static/css/register.css"> -->
+
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
@@ -26,7 +32,7 @@
             <label for="label">label</label>
             <input type="text" name="label">
         </li>
-        <input type="submit" value="作成">
+        <input type="submit" value="&#xf0c7; Save" class="save far fa-save">
     </form>
 </ul>
 <script type="text/javascript" th:src="@{/js/todo-api.js}"></script>

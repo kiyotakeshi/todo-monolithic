@@ -18,14 +18,12 @@ class TodoApi {
         .then((todoList) => {
             todoList.forEach((todo) => {
                 // sample
-                // <a href="http://localhost:8081/detail?id=1001"> <i class="fas fa-pen-square"></i> 1001: listen to music </a>
+                // <a href="http://localhost:8081/detail?id=1001" class="fas fa-pen-square">1001: listen to music</a>
                 const li = document.createElement('li');
                 const a = document.createElement('a');
                 a.href = location.origin + '/detail?id=' + todo.id;
                 a.innerText = `${todo.id}: ${todo.activityName}`;
-                const i = document.createElement('i');
-                i.classList.add('fas', 'fa-pen-square');
-                a.prepend(i);
+                a.classList.add('fas', 'fa-pen-square');
                 li.append(a);
                 todoUl.append(li);
             });

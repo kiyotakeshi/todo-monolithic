@@ -2,7 +2,7 @@ const todoUl = document.getElementById('todoUl');
 
 const todoApi = new TodoApi();
 
-const response = todoApi.fetch();
+const response = todoApi.getTodoList();
 
 // api から取得したデータを表示
 response.then((todoList) => {

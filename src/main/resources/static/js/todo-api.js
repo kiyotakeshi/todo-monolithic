@@ -6,7 +6,7 @@ class TodoApi {
         // console.log('constructor');
     }
 
-    fetch() {
+    getTodoList() {
         return fetch(apiEndpoint)
             .then((res) => {
                 if (res.status !== 200 || !res.ok) {

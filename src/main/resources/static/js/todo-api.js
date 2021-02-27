@@ -1,35 +1,22 @@
-const apiEndpoint = location.origin + '/api/todo/';
+apiEndpoint = location.origin + '/api/todo/';
 const form = document.getElementById('register');
 
 class TodoApi {
 
     constructor(){
-        console.log('constructor');
+        // console.log('constructor');
     }
 
     fetch(){
-        fetch(apiEndpoint)
+        return fetch(apiEndpoint)
         .then((res) => {
-            if (!res.ok) {
-                throw new Error('fetch failure...');
+            if (res.status !== 200 || !res.ok) {
+                throw new Error();
             }
             return res.json();
         })
-        .then((todoList) => {
-            todoList.forEach((todo) => {
-                // sample
-                // <a href="http://localhost:8081/detail?id=1001" class="fas fa-pen-square">1001: listen to music</a>
-                const li = document.createElement('li');
-                const a = document.createElement('a');
-                a.href = location.origin + '/detail?id=' + todo.id;
-                a.innerText = `${todo.id}: ${todo.activityName}`;
-                a.classList.add('fas', 'fa-pen-square');
-                li.append(a);
-                todoUl.append(li);
-            });
-        })
         .catch((error) => {
-            console.log('loop process error');
+            console.log('fetch error');
         });
     }
 
@@ -65,4 +52,3 @@ class TodoApi {
             })
             .catch((error) => console.log('error', error));
     };
-}

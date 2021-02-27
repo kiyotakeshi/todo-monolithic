@@ -64,6 +64,10 @@ pack build todo:$ARTIFACT_VERSION -p target/todo-$ARTIFACT_VERSION.jar --builder
 
 ## Run Docker container
 
+```shell
+docker-compose down
+```
+
 - run as a docker container ***from spring or Cloud Native Buildpacks image***
 
 ```shell

@@ -1,5 +1,3 @@
-const apiEndpoint = location.origin + '/api/todo/';
-const id = new URL(location.href).searchParams.get('id');
 const deleteButton = document.getElementById('delete');
 const updateButton = document.getElementById('update');
 const h1 = document.getElementById('h1');
@@ -26,14 +24,12 @@ function createSelectDom(value) {
     return select;
 }
 
-fetch(apiEndpoint + id)
-    .then((res) => {
-        if (!res.ok) {
-            throw new Error('fetch failure...');
-        }
-        return res.json();
-    })
-    .then((todo) => {
+const todoApi = new TodoApi();
+
+const response = todoApi.getTodo();
+
+// 取得した todo を表示
+response.then((todo) => {
         // @see https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Object/entries#iterating_through_an_object
         Object.entries(todo).forEach(([key, todoValue]) => {
             const li = document.createElement('li');
@@ -139,6 +135,7 @@ fetch(apiEndpoint + id)
                     li.appendChild(input2);
 
                     break;
+
                 default:
                     console.log(`${key} is Invalid key`);
             }
@@ -148,67 +145,19 @@ fetch(apiEndpoint + id)
         });
     })
     .catch((error) => {
-        console.log('error');
         todoUl.remove();
         deleteButton.remove();
         updateButton.remove();
         h1.innerHTML = '指定したIDの Todo は存在していません';
     });
 
-const todoDelete = () => {
-    const requestOptions = {
-        method: 'DELETE',
-    };
-
-    fetch(apiEndpoint + id, requestOptions)
-        .then((res) => {
-            if (!res.status === 204) {
-                throw new Error('delete failure');
-            }
-            // redirect to document root
-            location.href = location.origin;
-        })
-        .catch((error) => console.log('delete failure', error));
-};
-
-const todoUpdate = () => {
-    const myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
-
-    const formData = new FormData(updateForm);
-    formData.append('id', id);
-    const plainFormData = Object.fromEntries(formData.entries());
-
-    // sample data
-    // JSON.stringify({"id":10034,"activityName":"update","progress":"Doing","category":"Housework","label":"update label"});
-    const data = JSON.stringify(plainFormData);
-
-    const requestOptions = {
-        method: 'PUT',
-        headers: myHeaders,
-        body: data,
-        redirect: 'follow',
-    };
-
-    fetch(apiEndpoint + id, requestOptions)
-        .then((res) => {
-            if (!res.status === 200) {
-                throw new Error('update failure');
-            }
-            // TODO: 更新しましたポップアップ
-            // redirect to document root
-            location.href = location.origin;
-        })
-        .catch((error) => console.log('update failure', error));
-};
-
 deleteButton.addEventListener('click', () => {
     const result = confirm('delete?');
     if (result) {
-        todoDelete();
+        todoApi.deleteTodo();
     } else {
         console.log('削除しませんでした');
     }
 });
 
-updateButton.addEventListener('click', () => todoUpdate());
+updateButton.addEventListener('click', () => todoApi.updateTodo());

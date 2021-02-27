@@ -3,9 +3,6 @@ const todoUl = document.getElementById('todoUl');
 const todoApi = new TodoApi();
 
 const response = todoApi.fetch();
-// console.log(apiEndpoint);
-// apiEndpoint = 'hoge';
-// console.log(apiEndpoint);
 
 // api から取得したデータを表示
 response.then((todoList) => {

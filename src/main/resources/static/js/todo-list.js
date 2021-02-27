@@ -1,8 +1,8 @@
+const apiEndpoint = location.origin + '/api/todo/';
 const todoUl = document.getElementById('todoUl');
 
 const todoApi = new TodoApi();
-
-const response = todoApi.getTodoList();
+const response = todoApi.getTodoList(apiEndpoint);
 
 // api から取得したデータを表示
 response

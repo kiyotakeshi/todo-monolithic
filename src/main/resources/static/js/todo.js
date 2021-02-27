@@ -1,3 +1,4 @@
+const apiEndpoint = location.origin + '/api/todo/';
 const deleteButton = document.getElementById('delete');
 const updateButton = document.getElementById('update');
 const h1 = document.getElementById('h1');
@@ -25,12 +26,10 @@ function createSelectDom(value) {
 }
 
 const todoApi = new TodoApi();
-
-const response = todoApi.getTodo();
+const response = todoApi.getTodo(apiEndpoint);
 
 // 取得した todo を表示
-response
-    .then((todo) => {
+response.then((todo) => {
         // @see https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Object/entries#iterating_through_an_object
         Object.entries(todo).forEach(([key, todoValue]) => {
             const li = document.createElement('li');
@@ -155,10 +154,10 @@ response
 deleteButton.addEventListener('click', () => {
     const result = confirm('delete?');
     if (result) {
-        todoApi.deleteTodo();
+        todoApi.deleteTodo(apiEndpoint);
     } else {
         console.log('削除しませんでした');
     }
 });
 
-updateButton.addEventListener('click', () => todoApi.updateTodo());
+updateButton.addEventListener('click', () => todoApi.updateTodo(apiEndpoint));

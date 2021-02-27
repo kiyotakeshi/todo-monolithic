@@ -1,15 +1,11 @@
-apiEndpoint = location.origin + '/api/todo/';
 const form = document.getElementById('register');
 
 const id = new URL(location.href).searchParams.get('id');
 
 class TodoApi {
-    constructor() {
-        // console.log('constructor');
-    }
 
-    getTodoList() {
-        return fetch(apiEndpoint)
+    getTodoList(endpoint) {
+        return fetch(endpoint)
             .then((res) => {
                 if (res.status !== 200 || !res.ok) {
                     throw new Error();
@@ -21,8 +17,8 @@ class TodoApi {
             });
     }
 
-    getTodo() {
-        return fetch(apiEndpoint + id)
+    getTodo(endpoint) {
+        return fetch(endpoint + id)
             .then((res) => {
                 if (!res.ok) {
                     throw new Error('fetch failure...');
@@ -34,12 +30,12 @@ class TodoApi {
             });
     }
 
-    deleteTodo() {
+    deleteTodo(endpoint) {
         const requestOptions = {
             method: 'DELETE',
         };
 
-        fetch(apiEndpoint + id, requestOptions)
+        fetch(endpoint + id, requestOptions)
             .then((res) => {
                 if (!res.status === 204) {
                     throw new Error('delete failure');
@@ -50,7 +46,7 @@ class TodoApi {
             .catch((error) => console.log('delete failure', error));
     }
 
-    updateTodo() {
+    updateTodo(endpoint) {
         const myHeaders = new Headers();
         myHeaders.append('Content-Type', 'application/json');
 
@@ -69,7 +65,7 @@ class TodoApi {
             redirect: 'follow',
         };
 
-        fetch(apiEndpoint + id, requestOptions)
+        fetch(endpoint + id, requestOptions)
             .then((res) => {
                 if (!res.status === 200) {
                     throw new Error('update failure');
@@ -80,7 +76,7 @@ class TodoApi {
             .catch((error) => console.log('update failure', error));
     }
 
-    postTodo() {
+    postTodo(endpoint) {
         const formData = new FormData(form);
         formData.append('progress', 'Doing');
         // @see https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries
@@ -102,7 +98,7 @@ class TodoApi {
             redirect: 'follow',
         };
 
-        fetch(apiEndpoint, requestOptions)
+        fetch(endpoint, requestOptions)
             .then((response) => response.text())
             .then((result) => {
                 // redirect to document root

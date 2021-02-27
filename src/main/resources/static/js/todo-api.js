@@ -35,50 +35,50 @@ class TodoApi {
     }
 
     deleteTodo() {
-            const requestOptions = {
-                method: 'DELETE',
-            };
-
-            fetch(apiEndpoint + id, requestOptions)
-                .then((res) => {
-                    if (!res.status === 204) {
-                        throw new Error('delete failure');
-                    }
-                    // redirect to document root
-                    location.href = location.origin;
-                })
-                .catch((error) => console.log('delete failure', error));
+        const requestOptions = {
+            method: 'DELETE',
         };
+
+        fetch(apiEndpoint + id, requestOptions)
+            .then((res) => {
+                if (!res.status === 204) {
+                    throw new Error('delete failure');
+                }
+                // redirect to document root
+                location.href = location.origin;
+            })
+            .catch((error) => console.log('delete failure', error));
+    }
 
     updateTodo() {
-            const myHeaders = new Headers();
-            myHeaders.append('Content-Type', 'application/json');
+        const myHeaders = new Headers();
+        myHeaders.append('Content-Type', 'application/json');
 
-            const formData = new FormData(updateForm);
-            formData.append('id', id);
-            const plainFormData = Object.fromEntries(formData.entries());
+        const formData = new FormData(updateForm);
+        formData.append('id', id);
+        const plainFormData = Object.fromEntries(formData.entries());
 
-            // sample data
-            // JSON.stringify({"id":10034,"activityName":"update","progress":"Doing","category":"Housework","label":"update label"});
-            const data = JSON.stringify(plainFormData);
+        // sample data
+        // JSON.stringify({"id":10034,"activityName":"update","progress":"Doing","category":"Housework","label":"update label"});
+        const data = JSON.stringify(plainFormData);
 
-            const requestOptions = {
-                method: 'PUT',
-                headers: myHeaders,
-                body: data,
-                redirect: 'follow',
-            };
-
-            fetch(apiEndpoint + id, requestOptions)
-                .then((res) => {
-                    if (!res.status === 200) {
-                        throw new Error('update failure');
-                    }
-                    // redirect to document root
-                    location.href = location.origin;
-                })
-                .catch((error) => console.log('update failure', error));
+        const requestOptions = {
+            method: 'PUT',
+            headers: myHeaders,
+            body: data,
+            redirect: 'follow',
         };
+
+        fetch(apiEndpoint + id, requestOptions)
+            .then((res) => {
+                if (!res.status === 200) {
+                    throw new Error('update failure');
+                }
+                // redirect to document root
+                location.href = location.origin;
+            })
+            .catch((error) => console.log('update failure', error));
+    }
 
     postTodo() {
         const formData = new FormData(form);

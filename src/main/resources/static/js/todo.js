@@ -29,7 +29,8 @@ const todoApi = new TodoApi();
 const response = todoApi.getTodo();
 
 // 取得した todo を表示
-response.then((todo) => {
+response
+    .then((todo) => {
         // @see https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Object/entries#iterating_through_an_object
         Object.entries(todo).forEach(([key, todoValue]) => {
             const li = document.createElement('li');

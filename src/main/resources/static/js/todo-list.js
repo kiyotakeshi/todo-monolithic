@@ -15,8 +15,8 @@ response.then((todoList) => {
         li.append(a);
         todoUl.append(li);
     });
+})
+.catch((error) => {
+    console.log('fetch error');
+    h1.innerHTML = 'Todo の取得に失敗しました';
 });
-// エラー表示を画面に出したい場合は使う
-// .catch((error) => {
-//     console.log('fetch error');
-// });

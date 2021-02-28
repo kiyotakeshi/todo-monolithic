@@ -1,14 +1,30 @@
-postgres:
-  image: postgres:11.10
-  container_name: todo-postgres
-  ports:
-    - 5432:5432
-  # if you want to persist data
-  volumes:
-    - ./.docker/postgres:/var/lib/postgresql/data
-  environment:
-    POSTGRES_USER: postgres
-    POSTGRES_PASSWORD: password
-    POSTGRES_DB: todo
-    POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
-  restart: always
+services:
+  postgres:
+    image: postgres:11.10
+    container_name: todo-postgres
+    ports:
+      - 5432:5432
+    # if you want to persist data
+    volumes:
+      - ./.docker/postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: todo
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+    restart: always
+
+# if you want use reverse proxy in local develop phase,
+# especially running spring app using (NOT RUN AS CONTAINER)
+# - IDE
+# - `./mvnw spring-boot:run`
+# - `java -jar target/todo-x.x.x.jar`
+# 1. Comment out following nginx container definition
+# 2. Change ./reverse-proxy/nginx.conf file settings
+
+#  nginx:
+#    image: reverse-proxy-nginx
+#    build: ./reverse-proxy
+#    container_name: reverse-proxy-nginx
+#    ports:
+#      - 80:80

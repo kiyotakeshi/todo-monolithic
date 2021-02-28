@@ -23,3 +23,11 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://todo-postgres:5432/todo
     depends_on:
       - postgres
+  nginx:
+    image: reverse-proxy-nginx
+    build: ./reverse-proxy
+    container_name: reverse-proxy-nginx
+    ports:
+      - 80:80
+    depends_on:
+      - todo

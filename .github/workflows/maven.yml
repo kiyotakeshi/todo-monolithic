@@ -21,3 +21,11 @@ jobs:
         java-version: 11
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+
+    - name: Upload package file to artifact
+      if: success()
+      uses: actions/upload-artifact@v2
+      with:
+        name: artifact-jar
+        path: target/*jar
+        retention-days: 90

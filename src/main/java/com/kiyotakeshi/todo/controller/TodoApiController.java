@@ -19,10 +19,11 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/todo")
-@CrossOrigin(origins = {
-		"http://localhost:8081", // API call by fetch from front
-		"http://localhost", // for nginx reverse proxy using case
-})
+@CrossOrigin(origins = { 
+    "http://localhost",
+    "http://www.bullstechnology.com",
+    "https://www.bullstechnology.com"
+ })
 public class TodoApiController {
 
 	private static final String BASE_PATH = "/api/todo/";
